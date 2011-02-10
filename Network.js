@@ -38,7 +38,7 @@ function Network (){
       this.events.onSyncJ(joueurs);
   };
   
-  this.disconnect = function(){
+	this.disconnect = function(){
     this.connected = false;
     
   };
