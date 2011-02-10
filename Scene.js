@@ -10,4 +10,13 @@ function Scene {
 	    return;
     }
 
+    drawAll = function()
+    {
+	for (i=0; i < tabComponent.length; i++)
+	{
+	    if (comp.draw)
+		tabComponent[i].draw();
+	}
+    }
+
 }
