@@ -1,22 +1,20 @@
-function Scene {
+function Scene() {
 
-    var tabComponent = [];
+    var components = {};
 
-    add = function (comp)
+    this.add = function(comp, name)
     {
-	if (comp.draw || comp.in)
-	    tabComponent += comp;
+	if (comp.draw)
+	    tabComponent[name] = comp;
 	else
 	    return;
     }
 
-    drawAll = function()
+    this.drawAll = function()
     {
-	for (i=0; i < tabComponent.length; i++)
+	for (var i in tabComponent)
 	{
-	    if (comp.draw)
-		tabComponent[i].draw();
+	    tabComponent[i].draw();
 	}
     }
-
 }
