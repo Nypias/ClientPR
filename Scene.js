@@ -2,19 +2,19 @@ function Scene() {
  
     this.components = {};
 
-    this.add = function(comp, name)
+    this.add = function(name, comp)
     {
 	if (comp.draw)
-	    tabComponent[name] = comp;
+	    this.components[name] = comp;
 	else
 	    return;
     }
 
     this.drawAll = function()
     {
-	for (var i in tabComponent)
+	for (var i in this.components)
 	{
-	    tabComponent[i].draw(this.ctx);
+	    this.components[i].draw(this.ctx);
 	}
     }
 
