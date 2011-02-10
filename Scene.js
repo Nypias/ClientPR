@@ -1,6 +1,6 @@
 function Scene() {
-
-    var components = {};
+ 
+    this.components = {};
 
     this.add = function(comp, name)
     {
@@ -14,7 +14,11 @@ function Scene() {
     {
 	for (var i in tabComponent)
 	{
-	    tabComponent[i].draw();
+	    tabComponent[i].draw(this.ctx);
 	}
+    }
+
+    this.attachCanvas = function(name){
+	this.ctx = document.getElementById(name).getContext('2d');
     }
 }
