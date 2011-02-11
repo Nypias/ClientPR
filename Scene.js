@@ -35,7 +35,6 @@ function Scene() {
     this.attachCanvas = function(name){
 	this.canvas = document.getElementById(name);
 	this.ctx = this.canvas.getContext('2d');
-	this.ctx = document.getElementById(name).getContext('2d');
     };
 
     this.getWidth = function(){	
