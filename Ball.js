@@ -9,7 +9,7 @@ function Ball(radius, x, y){
 	ctx.fill();
     };
 
-    this.moveTo(x, y){
+    this.moveTo = function(x, y){
 	this.x = x;
 	this.y = y;
     };
