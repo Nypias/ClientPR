@@ -18,7 +18,23 @@ function Scene() {
 	}
     }
 
+    this.clear = function(){
+	alert(this.canvas.width +" "+ this.canvas.height);
+	
+	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
+    }
+
+    this.rotate = function(x, y, angle){
+	this.ctx.save();
+	this.clear();
+	this.ctx.translate(x, y);
+	this.ctx.rotate(angle);
+	this.drawAll();
+	this.ctx.restore();
+    }
+
     this.attachCanvas = function(name){
-	this.ctx = document.getElementById(name).getContext('2d');
+	this.canvas = document.getElementById(name);
+	this.ctx = this.canvas.getContext('2d');
     }
 }
