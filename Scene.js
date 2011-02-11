@@ -38,4 +38,13 @@ function Scene() {
 	this.ctx = document.getElementById(name).getContext('2d');
     };
 
+    this.getWidth = function(){	
+	return this.canvas.width;
+    };
+
+    this.getHeight = function(){	
+	return this.canvas.height;
+    };
+
+    
 }
