@@ -45,5 +45,9 @@ function Scene() {
 	return this.canvas.height;
     };
 
+    this.getComponent = function(name){
+	return this.components[name];
+    };
+
     
 }
