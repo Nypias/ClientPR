@@ -4,15 +4,16 @@ function Slider(ax, ay, bx, by){
  
     this.a.x = ax;
     this.a.y = ay;
-    this.b.x = bx;
-    this.b.y = by;
+    /*this.b.x = bx;
+    this.b.y = by;*/
     this.l = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
     this.h = (this.l / 100) * 10;
+    this.angle = Math.abs(Math.asin((this.a.y - by) / this.l)) + Math.PI;
 
     this.draw = function(ctx){
 	ctx.save();
 	ctx.translate(this.a.x, this.a.y);
-	ctx.rotate(Math.abs(Math.asin((this.a.y - this.b.y) / this.l)) + Math.PI);
+	ctx.rotate(this.angle);
 	ctx.beginPath();
 	ctx.lineTo(-this.l, 0);
 	ctx.lineTo(-this.l, this.h);
@@ -20,5 +21,10 @@ function Slider(ax, ay, bx, by){
 	ctx.lineTo(0, 0);
 	ctx.fill();
 	ctx.restore();
+    };
+
+    this.moveTo = function(ax, ay){
+	this.a.x = ax;
+	this.a.y = ay;
     };
 }
