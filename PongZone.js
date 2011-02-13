@@ -9,4 +9,8 @@ function PongZone(array){
 	    ctx.stroke();
 	}
     };
+
+    this.setSides = function(array){
+	this.sides = array;
+    };
 }
