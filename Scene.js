@@ -18,6 +18,12 @@ function Scene() {
 	}
     };
 
+    this.drawSome = function(elems) {
+	for (var i in elems) {
+	    this.components[elems[i]].draw(this.ctx);
+	}
+    };
+
     this.clear = function(){
 	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
     };
