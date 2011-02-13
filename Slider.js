@@ -1,13 +1,12 @@
 function Slider(ax, ay, bx, by){
     this.a = {};
     this.b = {};
+    this.ratio = 10;
  
     this.a.x = ax;
     this.a.y = ay;
-    /*this.b.x = bx;
-    this.b.y = by;*/
     this.l = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
-    this.h = (this.l / 100) * 10;
+    this.h = (this.l / 100) * this.ratio;
     this.angle = Math.abs(Math.asin((this.a.y - by) / this.l)) + Math.PI;
 
     this.draw = function(ctx){
@@ -26,5 +25,9 @@ function Slider(ax, ay, bx, by){
     this.moveTo = function(ax, ay){
 	this.a.x = ax;
 	this.a.y = ay;
+    };
+
+    this.slide = function(distance){
+	
     };
 }
