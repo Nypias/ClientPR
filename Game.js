@@ -3,12 +3,15 @@ function Game {
 	this.tabJoueurs = {};
 	this.ball = { x : 50, y : 50, dX : 0, dY : 0};
 	this.nw = new Network();
+	this.scene = new Scene();
+	
+	this.scene.setCanvas("GameZone");
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
 		this.tabJoueurs.nom = {ancreDep : ancre1,
-								ancreArr : ancre2,
-								position : pos};
+				       ancreArr : ancre2,
+				       position : pos};
 	}
 	
 	this.supprJoueur = function(nom)
@@ -29,6 +32,7 @@ function Game {
 		this.tabJoueurs = tabJoueurs;
 	}
 	
+	
 	this.game = function()
 	{
 		Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
@@ -36,13 +40,13 @@ function Game {
 		
 		for (var i in this.tabJoueurs.nom)
 		{
-			ancres[i][0][0] = this.tabJoueurs.nom[i].ancre1.x * CANVAS_WIDTH;
-			ancres[i][0][1] = this.tabJoueurs.nom[i].ancre1.y * CANVAS_HEIGHT;
-			ancres[i][1][0] = this.tabJoueurs.nom[i].ancre2.x * CANVAS_WIDTH;
-			ancres[i][1][1] = this.tabJoueurs.nom[i].ancre2.y * CANVAS_HEIGHT;
+			ancres[i][0][0] = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
+			ancres[i][0][1] = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
+			ancres[i][1][0] = this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth();
+			ancres[i][1][1] = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();
 			
-			ax = ((this.tabJoueurs.nom[i].ancre2.x - this.tabJoueurs.nom[i].ancre1.x) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.x) * CANVAS_WIDTH;
-			ay = ((this.tabJoueurs.nom[i].ancre2.y - this.tabJoueurs.nom[i].ancre1.y) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.y) * CANVAS_HEIGHT;
+			ax = ((this.tabJoueurs.nom[i].ancre2.x - this.tabJoueurs.nom[i].ancre1.x) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.x) * this.scene.getWidth();
+			ay = ((this.tabJoueurs.nom[i].ancre2.y - this.tabJoueurs.nom[i].ancre1.y) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.y) * this.scene.getHeight();
 			bx = Math.sqrt(Math.pow(ax + ancres[i][0][0] - ancres[i][1][0], 2)) * 0.10;
 			by = Math.sqrt(Math.pow(ay + ancres[i][0][1] - ancres[i][1][1], 2)) * 0.10;
 			
