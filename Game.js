@@ -1,11 +1,19 @@
-function Game {
+var DIMENSION_BALLE = 5;
+
+function Game() {
 
 	this.tabJoueurs = {};
 	this.ball = { x : 50, y : 50, dX : 0, dY : 0};
 	this.nw = new Network();
 	this.scene = new Scene();
 	
-	this.scene.setCanvas("GameZone");
+	this.scene.attachCanvas("GameZone");
+	
+	this.nw.events.onSyncJ = this.setJoueurs;
+	this.nw.events.onContact = this.setBall;
+	this.nw.events.onSyncB = this.setBall;
+	
+	this.nw.connect();
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
@@ -21,6 +29,7 @@ function Game {
 
 	this.setBall = function(posX, posY, deltaX, deltaY )
 	{
+		alert("setBall")
 		this.ball.x = posX;
 		this.ball.y = posY;
 		this.ball.dX = deltaX;
@@ -29,14 +38,17 @@ function Game {
 
 	this.setJoueurs = function(tabJoueurs)
 	{
+		alert("SetJoueur")
 		this.tabJoueurs = tabJoueurs;
 	}
 	
 	
 	this.game = function()
 	{
-		Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
-		this.ancres = array;
+		if(!this.Gball)
+			this.Gball = Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
+			
+		this.ancres = [];
 		
 		for (var i in this.tabJoueurs.nom)
 		{
@@ -50,14 +62,13 @@ function Game {
 			bx = Math.sqrt(Math.pow(ax + ancres[i][0][0] - ancres[i][1][0], 2)) * 0.10;
 			by = Math.sqrt(Math.pow(ay + ancres[i][0][1] - ancres[i][1][1], 2)) * 0.10;
 			
-			Slider(ax, ay, bx, by);
+			if (!this.tabJoueurs[i].slider)
+				this.tabJoueurs[i].slider = Slider(ax, ay, bx, by);
 		}
-		
-		PongZone(ancres);
+		if(this.Gpongzone)
+			this.Gpongzone = PongZone(ancres);
+			
+		this.scene.drawAll();
 	}
 
-
-	nw.events.onSyncJ = this.setJoueurs;
-	nw.events.onContact = this.setBall;
-	nw.events.onSyncB = this.setBall;
 }	

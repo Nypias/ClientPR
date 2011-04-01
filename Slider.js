@@ -1,4 +1,5 @@
 function Slider(ax, ay, bx, by){
+
     this.a = {};
     this.b = {};
     this.ratio = 10;

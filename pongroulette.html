@@ -3,17 +3,31 @@
 <title>PongRoulette Test</title>
 <link rel=stylesheet type="text/css" href="style.css">
 
-<script src="pongroulette.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<style>
+#GameZone
+{
+  border:3px solid black;
+  margin:0 auto;
+}
+</style>
+
+<script src="Game.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="PongZone.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="Network.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="Scene.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="Slider.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="Rectangle.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+<script src="Ball.js" type="text/javascript" LANGUAGE="JavaScript"></script> 
+
 </head>
 
-<body>
+<body onLoad="var game = new Game(); game.game()">
 <h2>PongRoulette</h1>
 <p><u>Joueur 1 :</u> Haut : Z ; Bas : S.   <br />
 <u>Joueur 2 :</u> Haut : Fleche Haut ; Bas : Fleche Bas.</p>
-<div id="divpong">
-  <canvas id="canvasPong" width="800" height="350">
+
+  <canvas id="GameZone" width="800" height="350">
     Navigateur ne supporte pas le HTML5 Canvas.
   </canvas>
-</div>
 </body>
 </html>

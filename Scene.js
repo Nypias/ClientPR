@@ -39,7 +39,7 @@ function Scene() {
     };
 
     this.attachCanvas = function(name){
-	this.canvas = document.getElementById(name);
+	this.canvas = document.getElementById('GameZone');
 	this.ctx = this.canvas.getContext('2d');
     };
 
