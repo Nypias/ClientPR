@@ -3,30 +3,27 @@ function Network (){
   
   var ws;
   
-   this.events = {
+    this.events = {
     onConnect: function(){},
     onDisconnect: function(){},
     onError: function(){},
-    
     onGStat: function(gameStatus){},
-    onContact: function(x, y, dx, dy) {},
-    onSyncJ: function(joueurs) {},
+    onContact: function(x, y, dx, dy){},
+    onSyncJ: function(joueurs){},
     onCollision: function(){}
   };
   
-  this.parseMsg = function(message){
+  this.parseMsg = function(message,events){
     var data = JSON.parse(message);
-	
+
     if(data.msg == "Gstat")        // Nombre de joueurs et score
-      this.events.onGStats(data.gameStatus);// TO DO : A coder
+      events.onGStats(data.gameStatus);// TO DO : A coder
     else if(data.msg == "SyncJ")
-      this.events.onSyncJ(joueurs);     
+      events.onSyncJ(joueurs);     
     else if(data.msg == "Collision")
-      this.events.onCollision();        // TO DO : A coder
+      events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
-    {
-      this.events.onContact(data.point[0][0],data.point[0][1],0,0);
-    }
+      events.onContact(data.point[0][0],data.point[0][1],0,0);
     else
     {
         alert(data.type);
@@ -49,7 +46,7 @@ function Network (){
       events.onDisconnect();
     };
     ws.onmessage = function(e) {
-      parseMsg(e.data);
+      parseMsg(e.data,events);
     };
     ws.onerror = function() {
       events.onError();
