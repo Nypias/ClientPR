@@ -13,25 +13,27 @@ function Network (){
     onSyncJ: function(joueurs) {}
   };
   
-  this.parseMsg = function(msg){
-    var data = JSON.parse(msg);
+  this.parseMsg = function(message){
+    var data = JSON.parse(message);
 	
-    if(data.type == "syncb")
+    if(data.msg == "syncb")
       this.events.onSyncB(data.x, data.y, data.dx, data.dy);
-    else if(data.type == "gstat")
+    else if(data.msg == "gstat")
       this.events.onGStats(data.gameStatus);
-    else if(data.type == "contact")
+    else if(data.msg == "contact")
       this.events.onContact(data.x, data.y, data.dx, data.dy);
-    else if(data.type == "syncj")
+    else if(data.msg == "syncj")
       this.events.onSyncJ(joueurs);
     else
+    {
+        //alert(data.type);
     	this.not_supported = true;
+    }
   };
   
   this.connect = function(){
     ws = new WebSocket("ws://localhost:8080/game");
     
-    //LOLOLOLOLOLOLOLOLOLOLOLOL (mathieu)
     var parseMsg = this.parseMsg;
     var events = this.events;
 
