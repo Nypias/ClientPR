@@ -26,7 +26,7 @@ function Game() {
 		delete(this.tabJoueur.nom);
 	}
 
-	this.setBall = function(posX, posY, deltaX, deltaY )
+	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
 		alert("setBall")
 		this.ball.x = posX;

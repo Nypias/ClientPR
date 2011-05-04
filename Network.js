@@ -7,10 +7,10 @@ function Network (){
     onConnect: function(){},
     onDisconnect: function(){},
     onError: function(){},
+    
     onGStat: function(gameStatus){},
     onContact: function(x, y, dx, dy) {},
     onSyncJ: function(joueurs) {},
-    
     onCollision: function(){}
   };
   
@@ -25,7 +25,7 @@ function Network (){
       this.events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
     {
-        this.events.onContact(data.point[0][0],data.point[0][1],0,0);
+      this.events.onContact(data.point[0][0],data.point[0][1],0,0);
     }
     else
     {
