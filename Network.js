@@ -7,26 +7,29 @@ function Network (){
     onConnect: function(){},
     onDisconnect: function(){},
     onError: function(){},
-    onSyncB: function(x, y, dx, dy){},
     onGStat: function(gameStatus){},
     onContact: function(x, y, dx, dy) {},
-    onSyncJ: function(joueurs) {}
+    onSyncJ: function(joueurs) {},
+    
+    onCollision: function(){}
   };
   
   this.parseMsg = function(message){
     var data = JSON.parse(message);
 	
-    if(data.msg == "syncb")
-      this.events.onSyncB(data.x, data.y, data.dx, data.dy);
-    else if(data.msg == "gstat")
-      this.events.onGStats(data.gameStatus);
-    else if(data.msg == "contact")
-      this.events.onContact(data.x, data.y, data.dx, data.dy);
-    else if(data.msg == "syncj")
-      this.events.onSyncJ(joueurs);
+    if(data.msg == "Gstat")        // Nombre de joueurs et score
+      this.events.onGStats(data.gameStatus);// TO DO : A coder
+    else if(data.msg == "SyncJ")
+      this.events.onSyncJ(joueurs);     
+    else if(data.msg == "Collision")
+      this.events.onCollision();        // TO DO : A coder
+    else if (data.msg == "Trajectoire")
+    {
+        this.events.onContact(data.point[0][0],data.point[0][1],0,0);
+    }
     else
     {
-        //alert(data.type);
+        alert(data.type);
     	this.not_supported = true;
     }
   };

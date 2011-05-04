@@ -11,7 +11,6 @@ function Game() {
 	
 	this.nw.events.onSyncJ = this.setJoueurs;
 	this.nw.events.onContact = this.setBall;
-	this.nw.events.onSyncB = this.setBall;
 	
 	this.nw.connect();
 
