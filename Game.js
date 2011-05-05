@@ -6,33 +6,35 @@ function Game() {
 	{
 		alert("SetJoueur")
 		this.tabJoueurs = tabJoueurs;
-	}
+	};
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
 		this.tabJoueurs.nom = {ancreDep : ancre1,
 				       ancreArr : ancre2,
 				       position : pos};
-	}
+	};
 	
 	this.supprJoueur = function(nom)
 	{
 		delete(this.tabJoueur.nom);
-	}
+	};
 
 	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
-		alert("setBall");
-		this.Gball.x = posX;
-		this.Gball.y = posY;
-		//this.Gball.dX = deltaX;
+		Gball.x = posX;
+		Gball.y = posY;
+		//this.Gball.dX = deltaX;       // A changer : ne sert a rien
 		//this.Gball.dY = deltaY;
-	}
+		        
+		scene.components["Balle"].draw(this.ctx);
+	};
 	
 	this.game = function()
 	{
+	// Boucle infinie ici ?
 		if(!this.Gball)
-			this.Gball = Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
+			this.Gball = new Ball(DIMENSION_BALLE, ball.x, ball.y, true);
 			
 		this.ancres = [];
 		
@@ -55,29 +57,23 @@ function Game() {
 			this.Gpongzone = PongZone(ancres);
 			
 		this.scene.drawAll();
-	}
-	
-	this.initialisationGame = function()
-	{
-	        // Balle
-                this.ball = { x : 50, y : 50, dX : 0, dY : 0};
-	        this.Gball = new Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
-	        this.scene.add("Balle",this.Gball);
-	        
-	        // Joueurs
-	        this.tabJoueurs = {};	    
-	            
-	}
+	};
+		        
+        // Joueurs
+        this.tabJoueurs = {};	                
 
-	
-	
 	this.nw = new Network();
-	this.scene = new Scene();
+	scene = new Scene();
 	
-	this.scene.attachCanvas("GameZone");
+	scene.attachCanvas("GameZone");
 	
 	this.nw.events.onSyncJ = this.setJoueurs;
 	this.nw.events.onContact = this.setBall;
+	
+	// Balle
+        var ball = { x : 50, y : 50, dX : 0, dY : 0};
+        var Gball = new Ball(DIMENSION_BALLE, ball.x, ball.y, true);
+        scene.add("Balle",Gball);
 	
 	this.nw.connect();
 
