@@ -51,7 +51,7 @@ function Network (){
     ws.onerror = function() {
       events.onError();
     };
-  }
+  };
   
   this.broadcast = function(msg){
     ws.send(JSON.stringify(msg));

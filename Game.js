@@ -2,17 +2,11 @@ var DIMENSION_BALLE = 5;
 
 function Game() {
 
-	this.tabJoueurs = {};
-	this.ball = { x : 50, y : 50, dX : 0, dY : 0};
-	this.nw = new Network();
-	this.scene = new Scene();
-	
-	this.scene.attachCanvas("GameZone");
-	
-	this.nw.events.onSyncJ = this.setJoueurs;
-	this.nw.events.onContact = this.setBall;
-	
-	this.nw.connect();
+	this.setJoueurs = function(tabJoueurs)
+	{
+		alert("SetJoueur")
+		this.tabJoueurs = tabJoueurs;
+	}
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
@@ -28,19 +22,12 @@ function Game() {
 
 	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
-		alert("setBall")
+		//alert("setBall")
 		this.ball.x = posX;
 		this.ball.y = posY;
 		this.ball.dX = deltaX;
 		this.ball.dY = deltaY;
 	}
-
-	this.setJoueurs = function(tabJoueurs)
-	{
-		alert("SetJoueur")
-		this.tabJoueurs = tabJoueurs;
-	}
-	
 	
 	this.game = function()
 	{
@@ -69,5 +56,19 @@ function Game() {
 			
 		this.scene.drawAll();
 	}
+	
+	
+	
+	this.tabJoueurs = {};
+	this.ball = { x : 50, y : 50, dX : 0, dY : 0};
+	this.nw = new Network();
+	this.scene = new Scene();
+	
+	this.scene.attachCanvas("GameZone");
+	
+	this.nw.events.onSyncJ = this.setJoueurs;
+	this.nw.events.onContact = this.setBall;
+	
+	this.nw.connect();
 
 }	
