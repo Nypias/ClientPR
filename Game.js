@@ -22,11 +22,11 @@ function Game() {
 
 	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
-		//alert("setBall")
-		this.ball.x = posX;
-		this.ball.y = posY;
-		this.ball.dX = deltaX;
-		this.ball.dY = deltaY;
+		alert("setBall");
+		this.Gball.x = posX;
+		this.Gball.y = posY;
+		//this.Gball.dX = deltaX;
+		//this.Gball.dY = deltaY;
 	}
 	
 	this.game = function()
@@ -57,10 +57,20 @@ function Game() {
 		this.scene.drawAll();
 	}
 	
+	this.initialisationGame = function()
+	{
+	        // Balle
+                this.ball = { x : 50, y : 50, dX : 0, dY : 0};
+	        this.Gball = new Ball(DIMENSION_BALLE, this.ball.x, this.ball.y, true);
+	        this.scene.add("Balle",this.Gball);
+	        
+	        // Joueurs
+	        this.tabJoueurs = {};	    
+	            
+	}
+
 	
 	
-	this.tabJoueurs = {};
-	this.ball = { x : 50, y : 50, dX : 0, dY : 0};
 	this.nw = new Network();
 	this.scene = new Scene();
 	
