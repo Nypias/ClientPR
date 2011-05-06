@@ -22,12 +22,15 @@ function Game() {
 
 	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
-		this.Gball.x = posX;
-		this.Gball.y = posY;
+		this.Gball.x = (posX * this.scene.getWidth())/100;
+		this.Gball.y = (posY * this.scene.getHeight())/100;
 		//this.Gball.dX = deltaX;       // A changer : ne sert a rien
 		//this.Gball.dY = deltaY;
-		        
-		this.scene.components('Balle').draw(this.ctx);
+		       
+		var canvas = document.getElementById('GameZone');
+		var ctx = canvas.getContext('2d');
+		this.scene.clear();
+		this.scene.components['Balle'].draw(ctx);
 	};
 	
 	this.game = function()
@@ -39,7 +42,7 @@ function Game() {
 			
 		this.ancres = [];
 		var i=0;
-		for (i=0; i < this.tabJoueurs.nom.length; i++)
+		for (i=0; i < this.tabJoueurs.length; i++)
 		{
 			ancres[i][0][0] = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
 			ancres[i][0][1] = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
@@ -65,13 +68,13 @@ function Game() {
         // Joueurs
         this.tabJoueurs = {};	                
 
-	this.nw = new Network();
+	this.nw = new Network(this);
 	this.scene = new Scene();
 	
 	this.scene.attachCanvas("GameZone");
 	
-	this.nw.events.onSyncJ = this.setJoueurs;
-	this.nw.events.onContact = this.setBall;
+	//this.nw.events.onSyncJ = this.setJoueurs;
+	//this.nw.events.onContact = this.setBall;
 	
 	// Balle
         this.balle = { x : 50, y : 50, dX : 0, dY : 0};

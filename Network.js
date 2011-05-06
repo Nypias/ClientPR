@@ -1,5 +1,6 @@
-function Network (){
+function Network (game){
   this.connected = false;
+  this.gameN = game;
   
   var ws;
   
@@ -23,7 +24,8 @@ function Network (){
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
-      events.onContact(data.point[0][0],data.point[0][1],0,0);
+      //events.onContact(data.point[0][0],data.point[0][1],0,0);
+      game.setBall(data.point[0][0],data.point[0][1],0,0);
     else
     {
         alert(data.type);
