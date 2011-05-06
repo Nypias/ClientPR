@@ -4,10 +4,12 @@ function Scene() {
 
     this.add = function(name, comp)
     {
-	if (comp.draw)
-	    this.components[name] = comp;
-	else
-	    return;
+	    if (comp.draw) {
+	        this.components[name] = comp;
+	    }
+	    else {
+	        return;
+	    }
     };
 
     this.drawAll = function()
