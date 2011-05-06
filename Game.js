@@ -75,8 +75,10 @@ function Game() {
 	
 	// Balle
         this.balle = { x : 50, y : 50, dX : 0, dY : 0};
-        this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
-        this.scene.add("Balle",Gball);
+        if (!this.Gball) {
+            this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
+        }
+        this.scene.add("Balle",this.Gball);
 	
 	this.nw.connect();
 
