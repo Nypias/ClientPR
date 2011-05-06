@@ -104,15 +104,15 @@ function Game() {
 		var i=0;
 		for (i=0; i < this.tabJoueurs.length; i++)
 		{
-			this.ancres[i][0][0] = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
-			this.ancres[i][0][1] = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
-			this.ancres[i][1][0] = this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth();
-			this.ancres[i][1][1] = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();
+			this.ancres[i].ancreDepart.x = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
+			this.ancres[i].ancreDepart.y = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
+			this.ancres[i].ancreArrivee.x = this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth();
+			this.ancres[i]ancreArrivee.y = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();
 			
 			ax = ((this.tabJoueurs.nom[i].ancre2.x - this.tabJoueurs.nom[i].ancre1.x) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.x) * this.scene.getWidth();
 			ay = ((this.tabJoueurs.nom[i].ancre2.y - this.tabJoueurs.nom[i].ancre1.y) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.y) * this.scene.getHeight();
-			bx = Math.sqrt(Math.pow(ax + ancres[i][0][0] - ancres[i][1][0], 2)) * 0.10;
-			by = Math.sqrt(Math.pow(ay + ancres[i][0][1] - ancres[i][1][1], 2)) * 0.10;
+			bx = Math.sqrt(Math.pow(ax + this.ancres[i].ancreDepart.x - this.ancres[i].ancreArrivee.y, 2)) * 0.10;
+			by = Math.sqrt(Math.pow(ay + this.ancres[i].ancreDepart.y - this.ancres[i]ancreArrivee.y, 2)) * 0.10;
 			
 			if (!this.tabJoueurs[i].slider) {
 				this.tabJoueurs[i].slider = new Slider(ax, ay, bx, by);
@@ -123,47 +123,47 @@ function Game() {
 	
 	this.game = function()
 	{
-	// Joueurs
-    this.tabJoueurs = new Array();	                
+	    // Joueurs
+        this.tabJoueurs = new Array(1);	            // A CHANGER       
 
-	this.nw = new Network(this);
-	this.scene = new Scene();
-	this.scene.attachCanvas("GameZone");
+	    this.nw = new Network(this);
+	    this.scene = new Scene();
+	    this.scene.attachCanvas("GameZone");
 	
-	// Creation de la balle
-    this.balle = { x : 50, y : 50, dX : 0, dY : 0};
-    if(!this.Gball) {
-		this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
-	}
+	    // Creation de la balle
+        this.balle = { x : 50, y : 50, dX : 0, dY : 0};
+        if(!this.Gball) {
+		    this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
+	    }
 
-    // On ajoute la balle a la scene
-    this.scene.add("Balle",this.Gball);
-    
-    // Ajout d'un joueur
-    this.calculAncreJoueur("Thomas",0);  // A gauche
+        // On ajoute la balle a la scene
+        this.scene.add("Balle",this.Gball);
+        
+        // Ajout d'un joueur
+        this.calculAncreJoueur("Thomas",0);  // A gauche
 	
-	// Connection au Serveur
-	this.nw.connect();
+	    // Connection au Serveur
+	    this.nw.connect();
 	
-	// Envoi du message Hello : connexion d'un nouveau joueur
-	var date = new Date();  // On recupere le timestamp
-	var hello = {   "msg":"Hello",
-	                "pseudo":"Thomas",
-	                "time":+date.getTime()};
-	                alert(hello);
-	this.nw.broadcast(hello);
+	    // Envoi du message Hello : connexion d'un nouveau joueur
+	    var date = new Date();  // On recupere le timestamp
+	    var hello = {   "msg":"Hello",
+	                    "pseudo":"Thomas",
+	                    "time":+date.getTime()};
+	                    alert(hello);
+	    this.nw.broadcast(hello);
 
 			
-		this.ancres = new Array();       // Ancres des slides
-		this.createSlides();    // On cree les slides en fonction des joueurs
-		this.setSlides();       // On les dessine
+		    this.ancres = new Array();       // Ancres des slides
+		    this.createSlides();    // On cree les slides en fonction des joueurs
+		    this.setSlides();       // On les dessine
 
-		if(this.Gpongzone) {
-			this.Gpongzone = PongZone(this.ancres);
-		}
+		    if(this.Gpongzone) {
+			    this.Gpongzone = PongZone(this.ancres);
+		    }
 			
-		// On dessine tout
-		this.scene.drawAll();
+		    // On dessine tout
+		    this.scene.drawAll();
 	};
 		        
     
