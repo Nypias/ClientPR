@@ -20,7 +20,8 @@ function Network (game){
     if(data.msg == "Gstat")        // Nombre de joueurs et score
       events.onGStats(data.gameStatus);// TO DO : A coder
     else if(data.msg == "SyncJ")
-      events.onSyncJ(joueurs);     
+      //events.onSyncJ(joueurs);     
+      game.setJoueurs(data.raquettes);
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
