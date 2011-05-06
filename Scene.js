@@ -54,6 +54,10 @@ function Scene() {
     this.getComponent = function(name){
 	return this.components[name];
     };
+    
+    this.getCtx = function(){
+    return this.ctx;
+    }
 
     
 }

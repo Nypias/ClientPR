@@ -24,18 +24,13 @@ function Game() {
 	{
 		this.Gball.x = (posX * this.scene.getWidth())/100;
 		this.Gball.y = (posY * this.scene.getHeight())/100;
-		//this.Gball.dX = deltaX;       // A changer : ne sert a rien
-		//this.Gball.dY = deltaY;
-		       
-		var canvas = document.getElementById('GameZone');
-		var ctx = canvas.getContext('2d');
+				       
 		this.scene.clear();
-		this.scene.components['Balle'].draw(ctx);
+		this.scene.components['Balle'].draw(this.scene.getCtx());
 	};
 	
 	this.game = function()
 	{
-	// Boucle infinie ici ?
 		if(!this.Gball) {
 			this.Gball = new Ball(DIMENSION_BALLE, balle.x, balle.y, true);
 		}
@@ -72,9 +67,6 @@ function Game() {
 	this.scene = new Scene();
 	
 	this.scene.attachCanvas("GameZone");
-	
-	//this.nw.events.onSyncJ = this.setJoueurs;
-	//this.nw.events.onContact = this.setBall;
 	
 	// Balle
         this.balle = { x : 50, y : 50, dX : 0, dY : 0};
