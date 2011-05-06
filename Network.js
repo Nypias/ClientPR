@@ -18,10 +18,9 @@ function Network (game){
     var data = JSON.parse(message);
 
     if(data.msg == "Gstat")        // Nombre de joueurs et score
-      events.onGStats(data.gameStatus);// TO DO : A coder
-    else if(data.msg == "SyncJ")
-      //events.onSyncJ(joueurs);     
-      game.setJoueurs(data.raquettes);
+      game.setJoueurs(data.players);
+    else if(data.msg == "SyncJ")    // Position des raquettes     
+      game.setSlides(data.raquettes);
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
