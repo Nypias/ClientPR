@@ -42,7 +42,7 @@ function Game() {
 		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
 		                this.addJoueur(nom,ancreDepart,ancreArrivee,1);
 		}
-	}
+	};
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
@@ -123,7 +123,7 @@ function Game() {
 	
 	this.scene.attachCanvas("GameZone");
 	
-	// Balle
+	// Creation de la balle
     this.balle = { x : 50, y : 50, dX : 0, dY : 0};
     if (!this.Gball) {
         this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
@@ -131,8 +131,12 @@ function Game() {
     this.scene.add("Balle",this.Gball);
     
     // Ajout d'un joueur
-    this.calculAncreJoueur("Alexandre",0);
+    this.calculAncreJoueur("Alexandre",0);  // A gauche
 	
 	this.nw.connect();
+	
+	// Envoi du message Hello
+	var hello = "{msg:'Hello',pseudo:'Alexandre',time:"+Date.getTime()+"}";
+	this.nw.broadcast(hello);
 
 }	

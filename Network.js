@@ -24,7 +24,6 @@ function Network (game){
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
-      //events.onContact(data.point[0][0],data.point[0][1],0,0);
       game.setBall(data.point[0][0],data.point[0][1],0,0);
     else
     {
