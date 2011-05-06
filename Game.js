@@ -24,12 +24,26 @@ function Game() {
 	{
 		this.Gball.x = (posX * this.scene.getWidth())/100;
 		this.Gball.y = (posY * this.scene.getHeight())/100;
-				       
+				      
+	    // Display of the ball
 		this.scene.clear();
 		this.scene.components['Balle'].draw(this.scene.getCtx());
+		
+		// Display of the slides : momentane
+		this.setSlides();
 	};
 	
-	this.drawSlides = function()
+	this.setSlides = function()
+	{
+	    var i=0;
+	    for (i=0; i < this.tabJoueurs.length; i++)
+	    {
+	        alert(i);
+	        this.scene.components['Slider'+i].draw(this.scene.getCtx());
+	    }
+	}
+	
+	this.createSlides = function()
 	{
 		var i=0;
 		for (i=0; i < this.tabJoueurs.length; i++)
@@ -58,7 +72,8 @@ function Game() {
 		}
 			
 		this.ancres = [];
-		this.drawSlides();
+		this.createSlides();
+		this.setSlides();
 
 		if(this.Gpongzone) {
 			this.Gpongzone = PongZone(this.ancres);
