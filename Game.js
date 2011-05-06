@@ -24,22 +24,24 @@ function Game() {
 	
 	this.calculAncreJoueur = function(nom,axe)
 	{
+	var ancreDepart = {x:0, y:0};
+	var ancreArrivee = {x:0, y:0};
 	    if (axe == 0)
 		{
 		                // Raquette a gauche
-		                var ancreDepart.x = 0.1*this.scene.getWidth();
-		                var ancreDepart.y = 0.1*this.scene.getHeight();
-		                var ancreArrivee.x = ancreDepart.x;
-		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		                ancreDepart.x = 0.1*this.scene.getWidth();
+		                ancreDepart.y = 0.1*this.scene.getHeight();
+		                ancreArrivee.x = ancreDepart.x;
+		                ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
 		                this.addJoueur(nom,ancreDepart,ancreArrivee,0);
 		}
 		else if (axe == 1)
 		{
 		                // Raquette a droite
-		                var ancreDepart.x = 0.9*this.scene.getWidth();
-		                var ancreDepart.y = 0.9*this.scene.getHeight();
-		                var ancreArrivee.x = ancreDepart.x;
-		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		                ancreDepart.x = 0.9*this.scene.getWidth();
+		                ancreDepart.y = 0.9*this.scene.getHeight();
+		                ancreArrivee.x = ancreDepart.x;
+		                ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
 		                this.addJoueur(nom,ancreDepart,ancreArrivee,1);
 		}
 	};
@@ -136,7 +138,8 @@ function Game() {
 	this.nw.connect();
 	
 	// Envoi du message Hello
-	var hello = "{msg:'Hello',pseudo:'Alexandre',time:"+Date.getTime()+"}";
+	var date = new Date();  // On recupere le timestamp
+	var hello = "{msg:'Hello',pseudo:'Alexandre',time:"+date.getTime()+"}";
 	this.nw.broadcast(hello);
 
 }	
