@@ -99,20 +99,34 @@ function Game() {
 	    }
 	};
 	
+	this.stockeAncres = function(pos,ancreDepX,ancreDepY,ancreArrX,ancreArrY)
+	{
+	    this.ancres[pos] = {ancreDepartX : ancreDepX,
+	                        ancreDepartY : ancreDepY,
+	                        ancreArriveeX : ancreArrX,
+	                        ancreArriveeY : ancreArrY};
+	};
+	
 	this.createSlides = function()
 	{
 		var i=0;
 		for (i=0; i < this.tabJoueurs.length; i++)
 		{
-			this.ancres[i].ancreDepart.x = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
+		    stockeAncres(i,
+		                 this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth(),
+		                 this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight(),
+		                 this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth(),
+		                 this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight());
+		                 
+			/*this.ancres[i].ancreDepart.x = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
 			this.ancres[i].ancreDepart.y = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
 			this.ancres[i].ancreArrivee.x = this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth();
-			this.ancres[i]ancreArrivee.y = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();
+			this.ancres[i].ancreArrivee.y = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();*/
 			
 			ax = ((this.tabJoueurs.nom[i].ancre2.x - this.tabJoueurs.nom[i].ancre1.x) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.x) * this.scene.getWidth();
 			ay = ((this.tabJoueurs.nom[i].ancre2.y - this.tabJoueurs.nom[i].ancre1.y) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.y) * this.scene.getHeight();
-			bx = Math.sqrt(Math.pow(ax + this.ancres[i].ancreDepart.x - this.ancres[i].ancreArrivee.y, 2)) * 0.10;
-			by = Math.sqrt(Math.pow(ay + this.ancres[i].ancreDepart.y - this.ancres[i]ancreArrivee.y, 2)) * 0.10;
+			bx = Math.sqrt(Math.pow(ax + this.ancres[i].ancreDepartX - this.ancres[i].ancreArriveeX, 2)) * 0.10;
+			by = Math.sqrt(Math.pow(ay + this.ancres[i].ancreDepartY - this.ancres[i].ancreArriveeY, 2)) * 0.10;
 			
 			if (!this.tabJoueurs[i].slider) {
 				this.tabJoueurs[i].slider = new Slider(ax, ay, bx, by);
@@ -150,7 +164,7 @@ function Game() {
 	    var hello = {   "msg":"Hello",
 	                    "pseudo":"Thomas",
 	                    "time":+date.getTime()};
-	                    alert(hello);
+
 	    this.nw.broadcast(hello);
 
 			
