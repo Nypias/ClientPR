@@ -9,7 +9,7 @@ function Network (game){
     onDisconnect: function(){},
     onError: function(){},
     onGStat: function(gameStatus){},
-    onContact: function(x, y, dx, dy){},
+    onContact: function(x, y, offset){},
     onSyncJ: function(joueurs){},
     onCollision: function(){}
   };
@@ -24,7 +24,7 @@ function Network (game){
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
-      game.setBall(data.point[0][0],data.point[0][1],0,0);
+      game.calculPositionBalle(data.point[0][0],data.point[0][1],data.collisionTime);
     else
     {
         //alert("Type : " + data.type);

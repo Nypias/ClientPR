@@ -70,18 +70,41 @@ function Game() {
 	{
 		delete(this.tabJoueurs.nom);
 	};
+	
+	this.calculPositionBalle = function(posX,posY,collisionTime)
+	{
+	    d = new Date();
+	    // Le temps qu'il nous reste avant la collision est egal au temps de collision - le temps courant
+	    difference = collisionTime - d.getTime();
+	    
+        // TO DO : Algorithme sur papier, à convertir en JS
+	};
+	
+
+	
+	this.refreshGame = function ()
+	{
+	    // On efface tout
+	    this.scene.clear();
+	    
+	    // On redessine tout
+	    var i = 0;
+	    for (i=0; i < this.scene.components.length; i++)
+	    {
+	        this.scene.components[i].draw(this.scene.getCtx());
+	    }
+	};
 
     /*
     Calcule la position de la balle, efface la scene, et redessine la balle
-    
     */
-	this.setBall = function(posX, posY, deltaX, deltaY)
+	this.setBall = function(posX, posY)
 	{
 		this.Gball.x = (posX * this.scene.getWidth())/100;
 		this.Gball.y = (posY * this.scene.getHeight())/100;
 				      
 	    // Display of the ball
-		//this.scene.clear();
+		this.scene.clear();
 		this.scene.components['Balle'].draw(this.scene.getCtx());
 	};
 	
