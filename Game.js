@@ -15,29 +15,34 @@ function Game() {
 		        if (!this.tabJoueurs[tabJoueursArg.players[i]])
 		        {   // On cree le nouveau joueur
 		            // On regarde la valeur de axe dans tabJoueurs pour voir ou positionner la raquette
-		            if (tabJoueursArg.players[i].axe == 0)
-		            {
-		                // Raquette a gauche
-		                var ancreDepart.x = 0.1*this.scene.getWidth();
-		                var ancreDepart.y = 0.1*this.scene.getHeight();
-		                var ancreArrivee.x = ancreDepart.x;
-		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		                this.addJoueur(tabJoueursArg[i],ancreDepart,ancreArrivee,0);
-		            }
-		            else if (tabJoueursArg.players[i].axe == 1)
-		            {
-		                // Raquette a droite
-		                var ancreDepart.x = 0.9*this.scene.getWidth();
-		                var ancreDepart.y = 0.9*this.scene.getHeight();
-		                var ancreArrivee.x = ancreDepart.x;
-		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		                this.addJoueur(tabJoueursArg[i],ancreDepart,ancreArrivee,1);
-		            }
+                    this.calculAncreJoueur(tabJoueursArg[i],this.tabJoueursArg.players[i].axe);
 		        }
 		    }
 		}
 		//this.tabJoueurs = tabJoueursArg;
 	};
+	
+	this.calculAncreJoueur = function(nom,axe)
+	{
+	    if (axe == 0)
+		{
+		                // Raquette a gauche
+		                var ancreDepart.x = 0.1*this.scene.getWidth();
+		                var ancreDepart.y = 0.1*this.scene.getHeight();
+		                var ancreArrivee.x = ancreDepart.x;
+		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		                this.addJoueur(nom,ancreDepart,ancreArrivee,0);
+		}
+		else if (axe == 1)
+		{
+		                // Raquette a droite
+		                var ancreDepart.x = 0.9*this.scene.getWidth();
+		                var ancreDepart.y = 0.9*this.scene.getHeight();
+		                var ancreArrivee.x = ancreDepart.x;
+		                var ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		                this.addJoueur(nom,ancreDepart,ancreArrivee,1);
+		}
+	}
 
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
@@ -124,6 +129,9 @@ function Game() {
         this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
     }
     this.scene.add("Balle",this.Gball);
+    
+    // Ajout d'un joueur
+    this.calculAncreJoueur("Alexandre",0);
 	
 	this.nw.connect();
 
