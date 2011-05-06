@@ -29,13 +29,8 @@ function Game() {
 		this.scene.components['Balle'].draw(this.scene.getCtx());
 	};
 	
-	this.game = function()
+	this.drawSlides = function()
 	{
-		if(!this.Gball) {
-			this.Gball = new Ball(DIMENSION_BALLE, balle.x, balle.y, true);
-		}
-			
-		this.ancres = [];
 		var i=0;
 		for (i=0; i < this.tabJoueurs.length; i++)
 		{
@@ -51,10 +46,22 @@ function Game() {
 			
 			if (!this.tabJoueurs[i].slider) {
 				this.tabJoueurs[i].slider = Slider(ax, ay, bx, by);
+				this.scene.add("Slider"+i,this.tabJoueurs[i].slider);
 			}
 		}
+	}
+	
+	this.game = function()
+	{
+		if(!this.Gball) {
+			this.Gball = new Ball(DIMENSION_BALLE, balle.x, balle.y, true);
+		}
+			
+		this.ancres = [];
+		this.drawSlides();
+
 		if(this.Gpongzone) {
-			this.Gpongzone = PongZone(ancres);
+			this.Gpongzone = PongZone(this.ancres);
 		}
 			
 		this.scene.drawAll();
