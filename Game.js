@@ -123,12 +123,38 @@ function Game() {
 	
 	this.game = function()
 	{
-	    // Creation de la balle si non deja creee
-		if(!this.Gball) {
-			this.Gball = new Ball(DIMENSION_BALLE, balle.x, balle.y, true);
-		}
+	// Joueurs
+    this.tabJoueurs = new Array();	                
+
+	this.nw = new Network(this);
+	this.scene = new Scene();
+	this.scene.attachCanvas("GameZone");
+	
+	// Creation de la balle
+    this.balle = { x : 50, y : 50, dX : 0, dY : 0};
+    if(!this.Gball) {
+		this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
+	}
+
+    // On ajoute la balle a la scene
+    this.scene.add("Balle",this.Gball);
+    
+    // Ajout d'un joueur
+    this.calculAncreJoueur("Thomas",0);  // A gauche
+	
+	// Connection au Serveur
+	this.nw.connect();
+	
+	// Envoi du message Hello : connexion d'un nouveau joueur
+	var date = new Date();  // On recupere le timestamp
+	var hello = {   "msg":"Hello",
+	                "pseudo":"Thomas",
+	                "time":+date.getTime()};
+	                alert(hello);
+	this.nw.broadcast(hello);
+
 			
-		this.ancres = [];
+		this.ancres = new Array();       // Ancres des slides
 		this.createSlides();    // On cree les slides en fonction des joueurs
 		this.setSlides();       // On les dessine
 
@@ -140,28 +166,6 @@ function Game() {
 		this.scene.drawAll();
 	};
 		        
-    // Joueurs
-    this.tabJoueurs = {};	                
-
-	this.nw = new Network(this);
-	this.scene = new Scene();
-	this.scene.attachCanvas("GameZone");
-	
-	// Creation de la balle
-    this.balle = { x : 50, y : 50, dX : 0, dY : 0};
-
-    // On ajoute la balle a la scene
-    this.scene.add("Balle",this.Gball);
     
-    // Ajout d'un joueur
-    this.calculAncreJoueur("Alexandre",0);  // A gauche
-	
-	// Connection au Serveur
-	this.nw.connect();
-	
-	// Envoi du message Hello
-	var date = new Date();  // On recupere le timestamp
-	var hello = "{msg:'Hello',pseudo:'Alexandre',time:"+date.getTime()+"}";
-	this.nw.broadcast(hello);
 
 }	

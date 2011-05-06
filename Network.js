@@ -27,7 +27,7 @@ function Network (game){
       game.setBall(data.point[0][0],data.point[0][1],0,0);
     else
     {
-        alert(data.type);
+        //alert("Type : " + data.type);
     	this.not_supported = true;
     }
   };
