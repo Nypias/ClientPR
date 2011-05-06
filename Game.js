@@ -4,7 +4,7 @@ function Game() {
 
 	this.setJoueurs = function(tabJoueurs)
 	{
-		alert("SetJoueur")
+		alert("SetJoueur");
 		this.tabJoueurs = tabJoueurs;
 	};
 
@@ -22,23 +22,24 @@ function Game() {
 
 	this.setBall = function(posX, posY, deltaX, deltaY)
 	{
-		Gball.x = posX;
-		Gball.y = posY;
+		this.Gball.x = posX;
+		this.Gball.y = posY;
 		//this.Gball.dX = deltaX;       // A changer : ne sert a rien
 		//this.Gball.dY = deltaY;
 		        
-		scene.components["Balle"].draw(this.ctx);
+		this.scene.components('Balle').draw(this.ctx);
 	};
 	
 	this.game = function()
 	{
 	// Boucle infinie ici ?
-		if(!this.Gball)
-			this.Gball = new Ball(DIMENSION_BALLE, ball.x, ball.y, true);
+		if(!this.Gball) {
+			this.Gball = new Ball(DIMENSION_BALLE, balle.x, balle.y, true);
+		}
 			
 		this.ancres = [];
-		
-		for (var i in this.tabJoueurs.nom)
+		var i=0;
+		for (i=0; i < this.tabJoueurs.nom.length; i++)
 		{
 			ancres[i][0][0] = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
 			ancres[i][0][1] = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
@@ -50,11 +51,13 @@ function Game() {
 			bx = Math.sqrt(Math.pow(ax + ancres[i][0][0] - ancres[i][1][0], 2)) * 0.10;
 			by = Math.sqrt(Math.pow(ay + ancres[i][0][1] - ancres[i][1][1], 2)) * 0.10;
 			
-			if (!this.tabJoueurs[i].slider)
+			if (!this.tabJoueurs[i].slider) {
 				this.tabJoueurs[i].slider = Slider(ax, ay, bx, by);
+			}
 		}
-		if(this.Gpongzone)
+		if(this.Gpongzone) {
 			this.Gpongzone = PongZone(ancres);
+		}
 			
 		this.scene.drawAll();
 	};
@@ -63,17 +66,17 @@ function Game() {
         this.tabJoueurs = {};	                
 
 	this.nw = new Network();
-	scene = new Scene();
+	this.scene = new Scene();
 	
-	scene.attachCanvas("GameZone");
+	this.scene.attachCanvas("GameZone");
 	
 	this.nw.events.onSyncJ = this.setJoueurs;
 	this.nw.events.onContact = this.setBall;
 	
 	// Balle
-        var ball = { x : 50, y : 50, dX : 0, dY : 0};
-        var Gball = new Ball(DIMENSION_BALLE, ball.x, ball.y, true);
-        scene.add("Balle",Gball);
+        this.balle = { x : 50, y : 50, dX : 0, dY : 0};
+        this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
+        this.scene.add("Balle",Gball);
 	
 	this.nw.connect();
 
