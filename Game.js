@@ -183,14 +183,9 @@ function Game() {
 	    this.nw.connect();
 	
 	    // Envoi du message Hello : connexion d'un nouveau joueur
-	    var date = new Date();  // On recupere le timestamp
-	    var hello = {   "msg":"Hello",
-	                    "pseudo":"Thomas",
-	                    "time":+date.getTime()};
+        this.nw.sendHello("Thomas");
 
-	    this.nw.broadcast(hello);
 
-			
 		    this.ancres = new Array();       // Ancres des slides
 		    this.createSlides();    // On cree les slides en fonction des joueurs
 		    this.setSlides();       // On les dessine

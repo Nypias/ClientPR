@@ -1,6 +1,5 @@
 function Network (game){
   this.connected = false;
-  this.gameN = game;
   
   var ws;
   
@@ -61,6 +60,14 @@ function Network (game){
   
    this.disconnect = function(){
     	this.connected = false;  
+  };
+  
+  this.sendHello = function(name){
+  	    var date = new Date();  // On recupere le timestamp
+	    var hello = {   "msg":"Hello",
+	                    "pseudo":name,
+	                    "time":+date.getTime()};
+	    this.broadcast(hello);
   };
   
 }
