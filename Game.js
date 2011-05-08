@@ -35,26 +35,26 @@ function Game() {
 	*/
 	this.calculAncreJoueur = function(nom,axe)
 	{
-	var ancreDepart = {x:0, y:0};
-	var ancreArrivee = {x:0, y:0};
+	    var ancreDepart = {x:0, y:0};
+	    var ancreArrivee = {x:0, y:0};
 	    if (axe === 0)
-		{
-		                // Raquette a gauche
-		                ancreDepart.x = 0.1*this.scene.getWidth();
-		                ancreDepart.y = 0.1*this.scene.getHeight();
-		                ancreArrivee.x = ancreDepart.x;
-		                ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		                this.addJoueur(nom,ancreDepart,ancreArrivee,0);
-		}
-		else if (axe === 1)
-		{
-		                // Raquette a droite
-		                ancreDepart.x = 0.9*this.scene.getWidth();
-		                ancreDepart.y = 0.9*this.scene.getHeight();
-		                ancreArrivee.x = ancreDepart.x;
-		                ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		                this.addJoueur(nom,ancreDepart,ancreArrivee,1);
-		}
+	    {
+		      // Raquette a gauche
+		      ancreDepart.x = 0.01*this.scene.getWidth();
+		      ancreDepart.y = 0.3*this.scene.getHeight();
+		      ancreArrivee.x = ancreDepart.x;
+		      ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		      this.addJoueur(nom,ancreDepart,ancreArrivee,0);
+	    }
+	    else if (axe === 1)
+	    {
+		       // Raquette a droite
+		       ancreDepart.x = 0.99*this.scene.getWidth()-7;
+		       ancreDepart.y = 0.3*this.scene.getHeight();
+		       ancreArrivee.x = ancreDepart.x;
+		       ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+		       this.addJoueur(nom,ancreDepart,ancreArrivee,1);
+	    }
 	};
 
     // Ajoute un joueur
@@ -63,6 +63,7 @@ function Game() {
 		this.tabJoueurs[nom] = {ancreDep : ancre1,
 				       ancreArr : ancre2,
 				       position : pos};
+	    this.scene.add("Slider"+nom, new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y));
 	};
 	
 	// Supprime un joueur
@@ -71,28 +72,78 @@ function Game() {
 		delete(this.tabJoueurs.nom);
 	};
 	
+		
 	this.calculPositionBalle = function(posX,posY,collisionTime)
 	{
+	    //alert(collisionTime-this.ancienTime);
+	    //this.ancienTime = collisionTime;
+	    
+	    this.setBall(posX,posY);
+	/*
 	    d = new Date();
 	    // Le temps qu'il nous reste avant la collision est egal au temps de collision - le temps courant
-	    difference = collisionTime - d.getTime();
+	    //alert("Collision Time : " + collisionTime + "   Temps Courant : " + d.getTime());
+	    var difference = collisionTime - d.getTime();
 	    
-        // TO DO : Algorithme sur papier, à convertir en JS
+	    // Nombre de points a calculer
+        var nombrePoints = difference;///2; //- 5;
+        
+        // Calcul du tableau de points
+        this.calculPositionsBalle(posX,posY,nombrePoints);
+        
+        
+        // Affichage toutes les 2 ms de setBall
+        /*for (i = 0; i < nombrePoints*2; i++)
+        {
+            // On affiche la balle
+            alert("X : " + this.tabPosBalle[i].x + "    Y : " + this.tabPosBalle[i].y)
+            this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y);
+            
+        }*/
+	};
+	
+	function coordonneesPoint(x,y)
+	{
+	    this.x = x;
+	    this.y = y;
+	}
+	
+	this.calculPositionsBalle = function(posX,posY,nbrPoints)
+	{
+	    // Tableau de position des points
+	    this.tabPosBalle = new Array;
+	    
+	    // Calcul du vecteur allant du point courant de la balle vers le point de collision
+	    var vecteurX = posX - this.Gball.x;
+	    var vecteurY = posY - this.Gball.y;
+	    
+	    // Division de vecteurX et de vecteurY par le nombre de points
+	    var xAjout = vecteurX / nbrPoints;
+	    var yAjout = vecteurY / nbrPoints;
+	    
+	    // Sauvegarde des points courants de la balle
+	    var xCourant = this.Gball.x;
+	    var yCourant = this.Gball.y;
+	    
+	    // Stockage des points calcules dans le tableau
+	    for (i=0; i < nbrPoints*2; i++)
+	    {
+	        xCourant = xCourant + xAjout;
+	        yCourant = yCourant + yAjout;
+	        //var point = new coordonneesPoint(xCourant,yCourant);
+	        
+	        // On enregistre le point
+	        //this.tabPosBalle[i] = point;
+	        //alert("X : " + xCourant + "    Y : " + yCourant)
+	        this.setBall(xCourant,yCourant);
+	    }
 	};
 	
 
 	
 	this.refreshGame = function ()
 	{
-	    // On efface tout
-	    this.scene.clear();
-	    
-	    // On redessine tout
-	    var i = 0;
-	    for (i=0; i < this.scene.components.length; i++)
-	    {
-	        this.scene.components[i].draw(this.scene.getCtx());
-	    }
+        this.scene.clear();   
 	};
 
     /*
@@ -162,6 +213,8 @@ function Game() {
 	{
 	    // Joueurs
         this.tabJoueurs = new Array(1);	            // A CHANGER       
+        
+        this.ancienTime = 0;
 
 	    this.nw = new Network(this);
 	    this.scene = new Scene();
@@ -178,17 +231,19 @@ function Game() {
         
         // Ajout d'un joueur
         this.calculAncreJoueur("Thomas",0);  // A gauche
+        this.calculAncreJoueur("Mathieu",1);
 	
 	    // Connection au Serveur
 	    this.nw.connect();
 	
 	    // Envoi du message Hello : connexion d'un nouveau joueur
-        this.nw.sendHello("Thomas");
+        //this.nw.sendHello("Thomas");
 
 
-		    this.ancres = new Array();       // Ancres des slides
+		    /*this.ancres = new Array;       // Ancres des slides
 		    this.createSlides();    // On cree les slides en fonction des joueurs
-		    this.setSlides();       // On les dessine
+		    this.setSlides();       // On les dessine*/
+		   
 
 		    if(this.Gpongzone) {
 			    this.Gpongzone = PongZone(this.ancres);

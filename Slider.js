@@ -2,12 +2,14 @@ function Slider(ax, ay, bx, by){
 
     this.a = {};
     this.b = {};
-    this.ratio = 10;
+    this.ratio = 5;
  
     this.a.x = ax;
     this.a.y = ay;
     this.l = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
-    this.h = (this.l / 100) * this.ratio;
+    //this.h = (this.l / 100) * this.ratio;
+    //alert(this.h);
+    this.h = 7;
     this.angle = Math.abs(Math.asin((this.a.y - by) / this.l)) + Math.PI;
 
     this.draw = function(ctx){
