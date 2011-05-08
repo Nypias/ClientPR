@@ -8,7 +8,7 @@
   <body>
     <div id="jolilogo"><img src="ponglogo.png" alt="Pongroulette" /></div>
     <div id="enteryourname">
-      <form action="jeu.php" method="POST">
+      <form action="pongroulette.php" method="POST">
         <h3>Bienvenue dans l'expérience <strong>Pong</strong>roulette</h3>
         <p><label for="nomdujoueur">Veuillez indiquer le nom du joueur :</label>
           <input placeholder="&lt;Nom du joueur&gt;" id="nomdujoueur" name="nomdujoueur" /></p>

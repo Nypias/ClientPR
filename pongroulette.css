@@ -44,3 +44,21 @@
    padding-top: 10px;
    margin-bottom: 0px;
  }
+ 
+ #playground {
+   width: 800px;
+   margin: auto;
+ }
+ 
+ #playground .instructions {
+   text-align: center;
+   font-size: 9pt;
+   color: rgba(255,255,255,0.6);
+ }
+ 
+ h2 {
+   width: 800px;
+   margin: auto;
+   margin-top: 80px;
+   margin-bottom: 10px;
+ }
