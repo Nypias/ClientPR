@@ -6,6 +6,8 @@
  * @param y L'ordonnée initiale de la balle.
  */
 function Ball(radius, x, y, full){
+  var couleurBall = 'rgb(255,102,0)';
+  
   this.radius = radius;
   this.x = x;
   this.y = y;
@@ -15,6 +17,7 @@ function Ball(radius, x, y, full){
    * @param ctx Le contexte surlequel tracer la balle.
    */
   this.draw = function(ctx){
+    ctx.fillStyle = couleurBall;
     ctx.beginPath();
     ctx.arc(this.x, this.y, radius, 0, Math.PI*2, true);
     if (full)  {

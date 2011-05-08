@@ -25,7 +25,7 @@ function Game() {
     console.log("Fonction setJoueurs appelée.");
     
     // Verifie s'il y a un nouveau joueur
-    if (this.tabJoueurs.length !== tabJoueursArg.players.length)
+    if (this.tabJoueurs.length != tabJoueursArg.players.length)
     {
         var i=0;
         for (i=0; i < tabJoueursArg.players.length; i++)
@@ -73,8 +73,8 @@ function Game() {
     // Ajoute un joueur
   this.addJoueur = function(nom, ancre1, ancre2, pos)
   {
-      var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y);
-      this.scene.add('S'+nom, sliderJ);
+    var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y);
+    this.scene.add('S'+nom, sliderJ);
     this.tabJoueurs[nom] = {ancreDep : ancre1,
                 ancreArr : ancre2,
                 position : pos,
@@ -246,16 +246,16 @@ function Game() {
       // Envoi du message Hello : connexion d'un nouveau joueur
 
 
-        /*this.ancres = new Array;       // Ancres des slides
-        this.createSlides();    // On cree les slides en fonction des joueurs
-        this.setSlides();       // On les dessine*/
-        
-
-        if(this.Gpongzone) {
-          this.Gpongzone = PongZone(this.ancres);
-        }
+      /*this.ancres = new Array;       // Ancres des slides
+      this.createSlides();    // On cree les slides en fonction des joueurs
+      this.setSlides();       // On les dessine*/
       
-        // On dessine tout
-        this.scene.drawAll();
+
+      if(this.Gpongzone) {
+        this.Gpongzone = PongZone(this.ancres);
+      }
+    
+      // On dessine tout
+      this.scene.drawAll();
   };
 }	
