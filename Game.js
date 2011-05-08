@@ -235,6 +235,13 @@ function Game() {
 	
 	    // Connection au Serveur
 	    this.nw.connect();
+	   
+        $(window).jkey('up',function(){
+	        alert('up');
+        });
+
+
+
 	
 	    // Envoi du message Hello : connexion d'un nouveau joueur
         //this.nw.sendHello("Thomas");
