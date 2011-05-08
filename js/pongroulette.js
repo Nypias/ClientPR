@@ -1,11 +1,19 @@
+/**
+ *  CE FICHIER N'EST PLUS UTILISÉ
+ *  NE RESTEZ PAS DEUX HEURES COMME MOI À ESSAYER DE LE BIDOUILLER :
+ *  Ça sert à rien ! =)
+ *                                        - Stan
+ * @see Game.js
+ */
+
 // Constantes du jeu
 var RAQUETTE_WIDTH = 10;
 var RAQUETTE_HEIGHT = 100;
 var CANVAS_WIDTH = 800;
 var CANVAS_HEIGHT = 350;
 var DEPLACEMENT_RAQUETTE = 10;
-var COULEUR_RAQUETTES = "rgba(0,0,200,0.5)";
-var COULEUR_BALLE = "rgb(200,0,0)";
+var COULEUR_RAQUETTES = "rgba(255,255,255,0.5)";
+var COULEUR_BALLE = "rgb(255,102,0)";
 var DIMENSION_BALLE = 8;
 var VITESSE_BALLE = 2;
 var xRaquetteDroite = CANVAS_WIDTH-(CANVAS_WIDTH/20);
@@ -41,12 +49,12 @@ window.addEventListener("load",function() {
   initPlateFormePong(ctx, RAQUETTE_WIDTH, RAQUETTE_HEIGHT, CANVAS_WIDTH, posYRaqGauche, posYRaqDroite);
 
   // Rafraichissement du contexte 2D toutes les 10 ms
-  boucleJeu = setInterval(refreshPong,10);
+  boucleJeu = setInterval(refreshPong,10); // TODO: Implémenter ça avec la méthode [moz]AnimationRequest
 
   // Gestion des evenements
   window.document.onkeydown = gestionDeplacements;
-  // TO DO : Gestion des threads pour que la raquette gauche puisse bouger
-  // en même temps que la raquette droite ...
+  // TODO : Gestion des évenements pour que la raquette gauche puisse bouger
+  // en même temps que la raquette droite...
 
 
 }, false);
@@ -54,13 +62,13 @@ window.addEventListener("load",function() {
 // Fonction qui initialise les deux raquettes
 function initPlateFormePong(ctx, RAQUETTE_WIDTH, RAQUETTE_HEIGHT, CANVAS_WIDTH, posYRaqGauche, posYRaqDroite)
 {
-  ctx.fillStyle=COULEUR_RAQUETTES;  // Couleur des raquettes
+  ctx.fillStyle = COULEUR_RAQUETTES;  // Couleur des raquettes
 
   // Dessin de la raquette de gauche
-  ctx.fillRect(CANVAS_WIDTH/20, posYRaqGauche, RAQUETTE_WIDTH, RAQUETTE_HEIGHT);
+  ctx.fillRect(CANVAS_WIDTH / 20, posYRaqGauche, RAQUETTE_WIDTH, RAQUETTE_HEIGHT);
 
   // Dessin de la raquette de droite
-  ctx.fillRect(CANVAS_WIDTH-(CANVAS_WIDTH/20), posYRaqDroite, RAQUETTE_WIDTH, RAQUETTE_HEIGHT);
+  ctx.fillRect(CANVAS_WIDTH - (CANVAS_WIDTH / 20), posYRaqDroite, RAQUETTE_WIDTH, RAQUETTE_HEIGHT);
 
   return 1;
 }
@@ -72,26 +80,26 @@ function gestionDeplacements(event)
   if (event.keyCode == 90) 
   {
     // Evite la sortie de la raquette en haut
-    if (posYRaqGauche-DEPLACEMENT_RAQUETTE >= 0)
-      posYRaqGauche-=DEPLACEMENT_RAQUETTE;
+    if (posYRaqGauche - DEPLACEMENT_RAQUETTE >= 0)
+      posYRaqGauche -= DEPLACEMENT_RAQUETTE;
   }
   // Joueur Gauche : Touche S : la raquette gauche descend
   else if (event.keyCode == 83)	
   {
-    if (posYRaqGauche+DEPLACEMENT_RAQUETTE+RAQUETTE_HEIGHT <= CANVAS_HEIGHT)
-      posYRaqGauche+=DEPLACEMENT_RAQUETTE;
+    if (posYRaqGauche + DEPLACEMENT_RAQUETTE + RAQUETTE_HEIGHT <= CANVAS_HEIGHT)
+      posYRaqGauche += DEPLACEMENT_RAQUETTE;
   }
   // Joueur Droite : Touche Haut : la raquette droite monte
   else if (event.keyCode == 38)
   {
-    if (posYRaqDroite-DEPLACEMENT_RAQUETTE >= 0)
-      posYRaqDroite-=DEPLACEMENT_RAQUETTE;
+    if (posYRaqDroite - DEPLACEMENT_RAQUETTE >= 0)
+      posYRaqDroite -= DEPLACEMENT_RAQUETTE;
   }
   // Joueur Droite : Touche Bas : la raquette droite descend
   else if (event.keyCode == 40)	
   {
-    if (posYRaqDroite+DEPLACEMENT_RAQUETTE+RAQUETTE_HEIGHT <= CANVAS_HEIGHT)
-      posYRaqDroite+=DEPLACEMENT_RAQUETTE;
+    if (posYRaqDroite + DEPLACEMENT_RAQUETTE + RAQUETTE_HEIGHT <= CANVAS_HEIGHT)
+      posYRaqDroite += DEPLACEMENT_RAQUETTE;
   }
 }
 
@@ -112,26 +120,26 @@ function refreshPong ()
 
   // Et on recree  
   // Raquettes
-  ctx.fillStyle=COULEUR_RAQUETTES;	// Couleur des raquettes
-  ctx.fillRect(CANVAS_WIDTH/20, posYRaqGauche, RAQUETTE_WIDTH, RAQUETTE_HEIGHT); // Raquette Gauche
-  ctx.fillRect(CANVAS_WIDTH-(CANVAS_WIDTH/20), posYRaqDroite, RAQUETTE_WIDTH, RAQUETTE_HEIGHT); // Raquette Droite
+  ctx.fillStyle = COULEUR_RAQUETTES;	// Couleur des raquettes
+  ctx.fillRect(CANVAS_WIDTH / 20, posYRaqGauche, RAQUETTE_WIDTH, RAQUETTE_HEIGHT); // Raquette Gauche
+  ctx.fillRect(CANVAS_WIDTH - (CANVAS_WIDTH / 20), posYRaqDroite, RAQUETTE_WIDTH, RAQUETTE_HEIGHT); // Raquette Droite
 
   // Si rebond contre les murs haut et bas
-  if ((balleX + dirBalleX*VITESSE_BALLE) > CANVAS_WIDTH) dirBalleX = -1;// Si la balle touche le mur d'en bas
-  else if ((balleX + dirBalleX*VITESSE_BALLE) < 0) dirBalleX = 1;	// Si la balle touche le mur d'en haut
+  if ((balleX + dirBalleX * VITESSE_BALLE) > CANVAS_WIDTH) dirBalleX = -1;// Si la balle touche le mur d'en bas
+  else if ((balleX + dirBalleX * VITESSE_BALLE) < 0) dirBalleX = 1;	// Si la balle touche le mur d'en haut
 
-  if ((balleY + dirBalleY*VITESSE_BALLE) > CANVAS_HEIGHT) dirBalleY = -1;
+  if ((balleY + dirBalleY * VITESSE_BALLE) > CANVAS_HEIGHT) dirBalleY = -1;
   else {
-    if ((balleY + dirBalleY*VITESSE_BALLE) < 0) dirBalleY = 1;
+    if ((balleY + dirBalleY * VITESSE_BALLE) < 0) dirBalleY = 1;
     // Rebond sur la raquette
     else {      
       // Raquette droite
       // Si l'abscisse suivante de la balle est inferieure a l'abscisse du cote gauche de la raquette droite
-      if (((balleX + dirBalleX*VITESSE_BALLE) > xRaquetteDroite)
+      if (((balleX + dirBalleX * VITESSE_BALLE) > xRaquetteDroite)
 	// Si l'ordonnee suivante de la balle est superieure au sommet de la raquette droite 
-	&& ((balleY + dirBalleY*VITESSE_BALLE) > posYRaqDroite)
+	&& ((balleY + dirBalleY * VITESSE_BALLE) > posYRaqDroite)
 	// Si l'ordonnee suivante de la balle est inferieure au bas de la raquette droite
-	&& ((balleY + dirBalleY*VITESSE_BALLE) < (posYRaqDroite + RAQUETTE_HEIGHT)))
+	&& ((balleY + dirBalleY * VITESSE_BALLE) < (posYRaqDroite + RAQUETTE_HEIGHT)))
       {
 	dirBalleX = -1;
 	//dirBalleY = 1;		// TO DO : A changer
@@ -139,11 +147,11 @@ function refreshPong ()
       
       // Raquette gauche
       // Si l'abscisse suivante de la balle est inferieure a l'abscisse du cote droit de la raquette gauche
-      if (((balleX + dirBalleX*VITESSE_BALLE) < (xRaquetteGauche + RAQUETTE_WIDTH))
+      if (((balleX + dirBalleX * VITESSE_BALLE) < (xRaquetteGauche + RAQUETTE_WIDTH))
 	// Si l'ordonnee suivante de la balle est superieure au sommet de la raquette gauche
-	&& ((balleY + dirBalleY*VITESSE_BALLE) > (posYRaqGauche))
+	&& ((balleY + dirBalleY * VITESSE_BALLE) > (posYRaqGauche))
 	// Si l'ordonnee suivante de la balle est inferieure au bas de la raquette gauche
-	&& ((balleY + dirBalleY*VITESSE_BALLE) < (posYRaqGauche + RAQUETTE_HEIGHT)))
+	&& ((balleY + dirBalleY * VITESSE_BALLE) < (posYRaqGauche + RAQUETTE_HEIGHT)))
 	{
 	  dirBalleX = 1;	// Alors on va de l'autre cote
 	  //dirBalleY= -1;	// TO DO : A changer

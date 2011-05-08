@@ -1,9 +1,13 @@
+/**
+ * Gère la partie réseau (connexions) du client.
+ * @param game L'objet Game qui gère le jeu actuel.
+ */
 function Network (game){
   this.connected = false;
   
   var ws;
   
-    this.events = {
+  this.events = {
     onConnect: function(){},
     onDisconnect: function(){},
     onError: function(){},
@@ -13,20 +17,30 @@ function Network (game){
     onCollision: function(){}
   };
   
+  /**
+   * Traite un message en provenance du serveur.
+   * @param message Le contenu du message, en JSON.
+   * @param events Les évenements à exécuter.
+   */
   this.parseMsg = function(message,events){
     var data = JSON.parse(message);
 
+    // TODO: Cette fonctionne ne devrai qu'appeler les fonctions contenues
+    //       dans le tableaux des actions, et ces fonctions devrait être
+    //       implémentée ensuite dans Game, pour éviter une dépendance de
+    //       Network dans son initialisation.
+    
     if(data.msg == "Gstat")        // Nombre de joueurs et score
       game.setJoueurs(data.players);
     else if(data.msg == "SyncJ"){    // Position des raquettes
-        console.log("Dans SyncJ "  + data.raquettes["Thomas"]);
-        for (key in data.raquettes){     
-            //console.log(data.raquettes[key]);
-            game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
-        }
+      console.log("Dans SyncJ " + data.raquettes["Thomas"]);
+      for (key in data.raquettes){     
+        //console.log(data.raquettes[key]);
+        game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
+      }
     }
     else if(data.msg == "Collision")
-      events.onCollision();        // TO DO : A coder
+      events.onCollision();        // TODO : A coder
     else if (data.msg == "Trajectoire")
       game.calculPositionBalle(data.point[0][0],data.point[0][1],data.point[1]);
     else
@@ -36,6 +50,10 @@ function Network (game){
     }
   };
   
+  /**
+   * Se connecte au serveur et initialise le Websocket utilisé pour 
+   * les échanges avec le serveur.
+   */  
   this.connect = function(){
     ws = new WebSocket("ws://localhost:8080/game");
     
