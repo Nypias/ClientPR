@@ -44,7 +44,7 @@ function Game() {
 		      ancreDepart.y = 0.3*this.scene.getHeight();
 		      ancreArrivee.x = ancreDepart.x;
 		      ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		      this.addJoueur(nom,ancreDepart,ancreArrivee,0);
+		      this.addJoueur(nom,ancreDepart,ancreArrivee,50);
 	    }
 	    else if (axe === 1)
 	    {
@@ -53,17 +53,19 @@ function Game() {
 		       ancreDepart.y = 0.3*this.scene.getHeight();
 		       ancreArrivee.x = ancreDepart.x;
 		       ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		       this.addJoueur(nom,ancreDepart,ancreArrivee,1);
+		       this.addJoueur(nom,ancreDepart,ancreArrivee,50);
 	    }
 	};
 
     // Ajoute un joueur
 	this.addJoueur = function(nom, ancre1, ancre2, pos)
 	{
+	    var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y);
+	    this.scene.add('S'+nom, sliderJ);
 		this.tabJoueurs[nom] = {ancreDep : ancre1,
 				       ancreArr : ancre2,
-				       position : pos};
-	    this.scene.add("Slider"+nom, new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y));
+				       position : pos,
+				       slider: sliderJ};	    
 	};
 	
 	// Supprime un joueur
@@ -209,6 +211,22 @@ function Game() {
 		}
 	};
 	
+	this.moveSlider = function(slider, pos){	
+	    console.log('avant : ' +slider.a.y + ' ' + pos + ' ' + slider.l);
+        ay = (pos/100) * this.scene.getHeight() - (slider.l/2);
+        
+        if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
+        {
+            slider.a.y = ay;
+            this.tabJoueurs['Thomas'].position = pos;    
+        }
+        
+   	    console.log('apres : ' +slider.a.y);
+        this.scene.clear();
+        this.scene.drawAll();
+    };
+   
+	
 	this.game = function()
 	{
 	    // Joueurs
@@ -236,12 +254,13 @@ function Game() {
 	    // Connection au Serveur
 	    this.nw.connect();
 	   
-        $(window).jkey('up',function(){
-	        alert('up');
-        });
-
-
-
+        /*$(window).jkey('up, down, left, right', function(key){
+	        console.log(key);
+	        if (key == 'up'){
+	            this.moveSlider(this.tabJoueurs['Thomas'].slider, this.tabJoueurs['Thomas'].position - 10);
+	        }
+        });*/
+   
 	
 	    // Envoi du message Hello : connexion d'un nouveau joueur
         //this.nw.sendHello("Thomas");

@@ -26,9 +26,10 @@ function Slider(ax, ay, bx, by){
     };
 
     this.moveTo = function(ax, ay){
-	this.a.x = ax;
-	this.a.y = ay;
+	    this.a.x = ax;
+	    this.a.y = ay;
     };
+    
 
     this.slide = function(distance){
 	
