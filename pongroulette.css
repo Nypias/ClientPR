@@ -1,0 +1,46 @@
+ body {
+   background-color: #00112b;
+   font-family: Ubuntu,"Trebuchet MS",Arial,sans-serif;
+   color: white;
+ }
+ 
+ #jolilogo {
+   margin-top: 250px;
+   text-align: center;
+ }
+ 
+ #enteryourname {
+   width: 500px;
+   margin: 25px auto;
+   background-color: #00255d;
+   border-radius: 20px;
+   padding: 15px;
+ }
+ 
+ #enteryourname label {
+   float: left;
+ }
+ 
+ #enteryourname h3 {
+   margin: 0px;
+ }
+ 
+ #enteryourname p {
+   clear: both;
+ }
+ 
+ #enteryourname #nomdujoueur {
+   float: right;
+   border: 1px solid black;
+   background-color: #00112b;
+   font-family: inherit;
+   padding: 3px 5px;
+   border-radius: 5px;
+   color: white;
+ }
+ 
+ #enteryourname .w-commencer {
+   text-align: center;
+   padding-top: 10px;
+   margin-bottom: 0px;
+ }
