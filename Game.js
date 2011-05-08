@@ -44,7 +44,7 @@ function Game() {
 		      ancreDepart.y = 0.3*this.scene.getHeight();
 		      ancreArrivee.x = ancreDepart.x;
 		      ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-		      this.addJoueur(nom,ancreDepart,ancreArrivee,50);
+		      this.addJoueur(nom,ancreDepart,ancreArrivee,50);	
 	    }
 	    else if (axe === 1)
 	    {
@@ -141,7 +141,6 @@ function Game() {
 	    }
 	};
 	
-
 	
 	this.refreshGame = function ()
 	{
@@ -158,58 +157,9 @@ function Game() {
 				      
 	    // Display of the ball
 		this.scene.clear();
-		this.scene.components['Balle'].draw(this.scene.getCtx());
+		this.scene.drawAll();
 	};
 	
-	/*
-	Appelee lorsque le client recoit de la part du serveur un RSync : 
-	repositionnement des raquettes des autres joueurs	
-	*/
-	this.setSlides = function(positionRaq)
-	{
-	    var i=0;
-	    for (i=0; i < this.tabJoueurs.length; i++)
-	    {
-	        // TO DO : Positionner les raquettes en fonction des pourcentages de positionRaq
-	        this.scene.components['Slider'+i].draw(this.scene.getCtx());
-	    }
-	};
-	
-	this.stockeAncres = function(pos,ancreDepX,ancreDepY,ancreArrX,ancreArrY)
-	{
-	    this.ancres[pos] = {ancreDepartX : ancreDepX,
-	                        ancreDepartY : ancreDepY,
-	                        ancreArriveeX : ancreArrX,
-	                        ancreArriveeY : ancreArrY};
-	};
-	
-	this.createSlides = function()
-	{
-		var i=0;
-		for (i=0; i < this.tabJoueurs.length; i++)
-		{
-		    stockeAncres(i,
-		                 this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth(),
-		                 this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight(),
-		                 this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth(),
-		                 this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight());
-		                 
-			/*this.ancres[i].ancreDepart.x = this.tabJoueurs.nom[i].ancre1.x * this.scene.getWidth();
-			this.ancres[i].ancreDepart.y = this.tabJoueurs.nom[i].ancre1.y * this.scene.getHeight();
-			this.ancres[i].ancreArrivee.x = this.tabJoueurs.nom[i].ancre2.x * this.scene.getWidth();
-			this.ancres[i].ancreArrivee.y = this.tabJoueurs.nom[i].ancre2.y * this.scene.getHeight();*/
-			
-			ax = ((this.tabJoueurs.nom[i].ancre2.x - this.tabJoueurs.nom[i].ancre1.x) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.x) * this.scene.getWidth();
-			ay = ((this.tabJoueurs.nom[i].ancre2.y - this.tabJoueurs.nom[i].ancre1.y) * this.tabJoueurs.nom[i].pos / 100 + this.tabJoueurs.nom[i].ancre1.y) * this.scene.getHeight();
-			bx = Math.sqrt(Math.pow(ax + this.ancres[i].ancreDepartX - this.ancres[i].ancreArriveeX, 2)) * 0.10;
-			by = Math.sqrt(Math.pow(ay + this.ancres[i].ancreDepartY - this.ancres[i].ancreArriveeY, 2)) * 0.10;
-			
-			if (!this.tabJoueurs[i].slider) {
-				this.tabJoueurs[i].slider = new Slider(ax, ay, bx, by);
-				this.scene.add("Slider"+i,this.tabJoueurs[i].slider);
-			}
-		}
-	};
 	
 	this.moveSlider = function(slider, pos){	
 	    console.log('avant : ' +slider.a.y + ' ' + pos + ' ' + slider.l);
@@ -218,12 +168,33 @@ function Game() {
         if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
         {
             slider.a.y = ay;
+            //TODO : Change name !!
             this.tabJoueurs['Thomas'].position = pos;    
+            this.nw.sendBouge(pos);
         }
         
    	    console.log('apres : ' +slider.a.y);
         this.scene.clear();
         this.scene.drawAll();
+    };
+    
+   this.moveSliderServer = function(slider, pos){	
+        ay = (pos/100) * this.scene.getHeight() - (slider.l/2);
+        
+        if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
+        {
+            slider.a.y = ay;
+            //TODO : Change name !!
+            this.tabJoueurs['Thomas'].position = pos;    
+        }
+        
+        this.scene.clear();
+        this.scene.drawAll();
+    };
+    
+    this.connect = function()
+    {
+        this.nw.sendHello("Thomas");
     };
    
 	
@@ -253,17 +224,9 @@ function Game() {
 	
 	    // Connection au Serveur
 	    this.nw.connect();
-	   
-        /*$(window).jkey('up, down, left, right', function(key){
-	        console.log(key);
-	        if (key == 'up'){
-	            this.moveSlider(this.tabJoueurs['Thomas'].slider, this.tabJoueurs['Thomas'].position - 10);
-	        }
-        });*/
    
-	
+	    setTimeout(function() {}, 1000); 
 	    // Envoi du message Hello : connexion d'un nouveau joueur
-        //this.nw.sendHello("Thomas");
 
 
 		    /*this.ancres = new Array;       // Ancres des slides

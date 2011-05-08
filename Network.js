@@ -18,8 +18,13 @@ function Network (game){
 
     if(data.msg == "Gstat")        // Nombre de joueurs et score
       game.setJoueurs(data.players);
-    else if(data.msg == "SyncJ")    // Position des raquettes     
-      game.setSlides(data.raquettes);
+    else if(data.msg == "SyncJ"){    // Position des raquettes
+        console.log("Dans SyncJ "  + data.raquettes["Thomas"]);
+        for (key in data.raquettes){     
+            //console.log(data.raquettes[key]);
+            game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
+        }
+    }
     else if(data.msg == "Collision")
       events.onCollision();        // TO DO : A coder
     else if (data.msg == "Trajectoire")
@@ -39,6 +44,8 @@ function Network (game){
 
     ws.onopen = function() {
       this.connected = true;
+      game.connect();
+      console.log("ws connected");
       events.onConnect();
     };
     ws.onclose = function() {
@@ -54,7 +61,11 @@ function Network (game){
   };
   
   this.broadcast = function(msg){
-    ws.send(JSON.stringify(msg));
+    console.log(JSON.stringify(msg));
+    if (ws.readyState == 1)
+        ws.send(JSON.stringify(msg));
+    else
+        console.log(ws.readyState);
   };
   
   
@@ -62,12 +73,20 @@ function Network (game){
     	this.connected = false;  
   };
   
-  this.sendHello = function(name){
+  this.sendHello = function(nameJ){
   	    var date = new Date();  // On recupere le timestamp
 	    var hello = {   "msg":"Hello",
-	                    "pseudo":name,
-	                    "time":+date.getTime()};
+	                    "pseudo":nameJ,
+	                    "time":date.getTime()};
 	    this.broadcast(hello);
+  };
+  
+  this.sendBouge = function(pos){
+        var date = new Date();  // On recupere le timestamp
+	    var bouge = {   "msg":"Bouge",
+	                    "raquette":pos,
+	                    "time":date.getTime()};
+	    this.broadcast(bouge);
   };
   
 }
