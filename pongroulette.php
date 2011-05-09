@@ -47,8 +47,7 @@
         Navigateur ne supporte pas le HTML5 Canvas.
       </canvas>
       <p class="instructions">
-        Le joueur 1 contrôle sa raquette avec Z et S. <br /> 
-        Le joueur 2 la contrôle avec les flèches Haut et Bas du clavier.
+        Le joueur contrôle sa raquette avec les flèches "Haut" et "Bas" du clavier.
       </p>
     </div>
   </body>
