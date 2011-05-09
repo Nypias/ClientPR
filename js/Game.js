@@ -9,7 +9,7 @@ var DIMENSION_BALLE = 5;
  * @see Scene.js
  * @see Slider.js
  */
-function Game() {
+function Game(nomJoueur) {
 
   /*
    * Ajoute un joueur au tableau de joueurs.
@@ -223,8 +223,7 @@ function Game() {
     if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
     {
         slider.a.y = ay;
-        //TODO : Change name !!
-        this.tabJoueurs['Thomas'].position = pos;    
+        this.tabJoueurs[this.nomJ].position = pos;    
         this.nw.sendBouge(pos);
     }
     
@@ -239,8 +238,7 @@ function Game() {
     if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
     {
         slider.a.y = ay;
-        //TODO : Change name !!
-        this.tabJoueurs['Thomas'].position = pos;    
+        this.tabJoueurs[this.nomJ].position = pos;    
     }
     
     this.scene.clear();
@@ -249,7 +247,7 @@ function Game() {
   
   this.connect = function()
   {
-      this.nw.sendHello("Thomas");
+      this.nw.sendHello(this.nomJ);
   };
    
 	
@@ -257,6 +255,8 @@ function Game() {
   {
       // Joueurs
       this.tabJoueurs = new Array(1);	            // A CHANGER       
+      
+      this.nomJ = nomJoueur;
       
       this.ancienTime = 0;
 
@@ -274,8 +274,8 @@ function Game() {
       this.scene.add("Balle",this.Gball);
       
       // Ajout d'un joueur
-      this.calculAncreJoueur("Thomas",0);  // A gauche
-      this.calculAncreJoueur("Mathieu",1);
+      this.calculAncreJoueur(this.nomJ,0);  // A gauche
+      //this.calculAncreJoueur("Mathieu",1);
 
       // Connection au Serveur
       this.nw.connect();

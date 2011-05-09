@@ -22,18 +22,19 @@
     <script src="js/jquery.jkey-1.1.js" type="text/javascript"></script> 
     <script type="text/javascript">
       var game = null;
+      var nom = <?php echo $_POST['nomdujoueur']; ?>
       $(document).ready(function(){
-        game = new Game(); 
+        game = new Game(nom); 
         game.game();
         $(window).jkey('up, down, left, right', function(key){
           console.log(key);
           if (key == 'up'){
               //alert(game.tabJoueurs['Thomas'].position);
-              game.moveSlider(game.tabJoueurs['Thomas'].slider, game.tabJoueurs['Thomas'].position - 4);
+              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].position - 4);
           }
           else if (key == 'down'){
               //alert(game.tabJoueurs['Thomas'].position);
-              game.moveSlider(game.tabJoueurs['Thomas'].slider, game.tabJoueurs['Thomas'].position + 4);
+              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].position + 4);
           
           }
         });

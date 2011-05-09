@@ -33,7 +33,7 @@ function Network (game){
     if(data.msg == "Gstat")        // Nombre de joueurs et score
       game.setJoueurs(data.players);
     else if(data.msg == "SyncJ"){    // Position des raquettes
-      console.log("Dans SyncJ " + data.raquettes["Thomas"]);
+      console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
         //console.log(data.raquettes[key]);
         game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
