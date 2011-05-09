@@ -92,50 +92,86 @@ function Game() {
   {
     //alert(collisionTime-this.ancienTime);
     //this.ancienTime = collisionTime;
-      
-    this.setBall(posX,posY);
-    
-    /*
-    d = new Date();
-    
-    // Le temps qu'il nous reste avant la collision est egal au temps de collision - le temps courant
-    //alert("Collision Time : " + collisionTime + "   Temps Courant : " + d.getTime());
-    var difference = collisionTime - d.getTime();
-    
-    // Nombre de points a calculer
-    var nombrePoints = difference;///2; //- 5;
+        
+    /* Nombre de points a calculer
+       Initialise au depart par 20
+       C'est a dire que 20 points seront calcules sur la droite qui va du point actuel de la balle
+          au point de collision
+    */
+    var nombrePoints = 20;
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
     
+    // Definition d'un objet Date pour calculer le timestamp actuel
+    d = new Date();
     
-    // Affichage toutes les 2 ms de setBall
-    /*for (i = 0; i < nombrePoints*2; i++)
-    {
-        // On affiche la balle
-        alert("X : " + this.tabPosBalle[i].x + "    Y : " + this.tabPosBalle[i].y)
-        this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y);
-        
-    }
+    // Le temps qu'il nous reste avant la collision est egal au temps de collision - le temps actuel
+    var difference = collisionTime - d.getTime();
+    
+    /* On affiche la balle toutes les "difference/nombrePoints" ms
+       Le premier parametre en guillemet s'agit des fonctions qu'on va appeller toutes les "differences/nombrePoints" ms
+       Le deuxieme parametre est le temps d'attente
+       Dans le premier parametre, on appelle la fonction setBall avec l'abscisse et l'ordonnee des points calcules (fonction 
+       qui affiche la balle) et on incremente i         
+       Un try catch est present pour prendre l'exception au cas ou on lit trop loin dans le tableau et que le point n'existe pas.
+       Dans ce cas, on reset juste le setInterval.
     */
+    i = 0;
+    try {
+        affichageBalle = setInterval("this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y) ; i++;",difference/nombrePoints);
+    }
+    catch (err) {
+        clearInterval(affichageBalle);
+    }
+    
+    // A la fin de la methode, pour eviter les erreurs, on refixe la balle courante sur le point de collision
+    this.Gball.x = posX;
+    this.Gball.y = posY;
+  };
+  
+  /*
+    Objectif : this.nouveauPaquetTrajectoire a pour but de stopper l'affichage de la balle de la fonction calculPositionBalle
+    lorsqu'un nouveau paquet est recu
+    Strategie : Arrete la boucle setInterval
+  */
+  this.nouveauPaquetTrajectoire = function ()
+  {
+        clearInterval(affichageBalle);
   };
 
+  /* 
+    Permet de creer un objet coordonneesPoint caracterise par une abscisse (x) et une ordonnee (y)
+  */
   function coordonneesPoint(x,y)
   {
     this.x = x;
     this.y = y;
   }
 
+  /*
+    Objectif : Calcule les coordonnees des "nbrPoints" entre la position courante de la balle et le point de collision
+    Strategie : explicitee ci-dessous
+    
+    @param posX : abscisse du point de collision
+    @param posY : ordonnee du point de collision
+    @param nbrPoints : nombre de points a calculer
+  */
   this.calculPositionsBalle = function(posX,posY,nbrPoints)
   {
-    // Tableau de position des points
+    // Initialisation d'un nouveau tableau ou l'on va stocker les points
     this.tabPosBalle = new Array;
     
-    // Calcul du vecteur allant du point courant de la balle vers le point de collision
-    var vecteurX = posX - this.Gball.x;
-    var vecteurY = posY - this.Gball.y;
+    /* Calcul du vecteur allant du point courant de la balle vers le point de collision
+      La position de la balle est normalise car donnee en parametre de la fonction en pourcentage.
+      Or, this.Gball.x et .y sont en pixels. Donc on met toutes les coordonnees de la balle en pixels.
+    */
+    var vecteurX = ((posX * this.scene.getWidth())/100) - this.Gball.x;
+    var vecteurY = ((posY * this.scene.getHeight())/100) - this.Gball.y;
     
-    // Division de vecteurX et de vecteurY par le nombre de points
+    /* Division de vecteurX et de vecteurY par le nombre de points
+       pour avoir un vecteur dont la norme est reduite
+    */
     var xAjout = vecteurX / nbrPoints;
     var yAjout = vecteurY / nbrPoints;
     
@@ -144,16 +180,18 @@ function Game() {
     var yCourant = this.Gball.y;
     
     // Stockage des points calcules dans le tableau
-    for (i=0; i < nbrPoints*2; i++)
+    for (i=0; i < nbrPoints; i++)
     {
+      // On increment x et y avec le vecteur calcule ci-dessus qui va vers le point de collision
       xCourant = xCourant + xAjout;
       yCourant = yCourant + yAjout;
-      //var point = new coordonneesPoint(xCourant,yCourant);
+      
+      // On cree le point correspondant
+      var point = new coordonneesPoint(xCourant,yCourant);
       
       // On enregistre le point
-      //this.tabPosBalle[i] = point;
+      this.tabPosBalle[i] = point;
       //alert("X : " + xCourant + "    Y : " + yCourant)
-      this.setBall(xCourant,yCourant);
     }
   };
 

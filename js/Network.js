@@ -42,7 +42,10 @@ function Network (game){
     else if(data.msg == "Collision")
       events.onCollision();        // TODO : A coder
     else if (data.msg == "Trajectoire")
+    {
+      game.nouveauPaquetTrajectoire();
       game.calculPositionBalle(data.point[0][0],data.point[0][1],data.point[1]);
+    }
     else
     {
         //alert("Type : " + data.type);
