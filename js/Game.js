@@ -25,7 +25,7 @@ function Game(nomJoueur) {
     console.log("Fonction setJoueurs appelée.");
     
     // Verifie s'il y a un nouveau joueur
-    if (this.tabJoueurs.length != tabJoueursArg.players.length)
+    if (this.tabJoueurs.length !== tabJoueursArg.players.length)
     {
         var i=0;
         for (i=0; i < tabJoueursArg.players.length; i++)
