@@ -98,7 +98,7 @@ function Game(nomJoueur) {
        C'est a dire que 20 points seront calcules sur la droite qui va du point actuel de la balle
           au point de collision
     */
-    var nombrePoints = 20;
+    var nombrePoints = 60;
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
@@ -287,7 +287,7 @@ function Game(nomJoueur) {
       this.scene.attachCanvas("GameZone");
 
       // Creation de la balle
-      this.balle = { x : 50, y : 50, dX : 0, dY : 0};
+      this.balle = { x : (this.scene.getWidth()/2), y : (this.scene.getHeight()/2), dX : 0, dY : 0};
       if(!this.Gball) {
         this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
       }
