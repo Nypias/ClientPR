@@ -119,7 +119,7 @@ function Game(nomJoueur) {
     */
     i = 0;
     try {
-        this.affichageBalle = setInterval("this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y) ; i++;",difference/nombrePoints);
+        this.affichageBalle = setInterval("game.setBall(i) ; i++;",difference/nombrePoints);
     }
     catch (err) {
         clearInterval(this.affichageBalle);
@@ -139,6 +139,7 @@ function Game(nomJoueur) {
     // A la fin de la methode, pour eviter les erreurs, on refixe la balle courante sur le point de collision
     this.Gball.x = posX;
     this.Gball.y = posY;
+
   };
   
   /*
@@ -172,38 +173,46 @@ function Game(nomJoueur) {
   {
     // Initialisation d'un nouveau tableau ou l'on va stocker les points
     this.tabPosBalle = new Array(nbrPoints);
+
     
     /* Calcul du vecteur allant du point courant de la balle vers le point de collision
       La position de la balle est normalise car donnee en parametre de la fonction en pourcentage.
       Or, this.Gball.x et .y sont en pixels. Donc on met toutes les coordonnees de la balle en pixels.
     */
-    var vecteurX = ((posX * this.scene.getWidth())/100) - this.Gball.x;
-    var vecteurY = ((posY * this.scene.getHeight())/100) - this.Gball.y;
-    
+
+    // Sauvegarde des points courants de la balle
+    var xCourant = this.Gball.x;
+    var yCourant = this.Gball.y;
+
+    //console.log("pt collision serveur " + posX + "," + posY);
+
+    //console.log("balle en " + xCourant + "," + yCourant);
+    var vecteurX = ((posX * this.scene.getWidth())/100) - xCourant;
+    var vecteurY = ((posY * this.scene.getHeight())/100) - yCourant;
+    //console.log("vecteur " + vecteurX + "," + vecteurY);    
     /* Division de vecteurX et de vecteurY par le nombre de points
        pour avoir un vecteur dont la norme est reduite
     */
     var xAjout = vecteurX / nbrPoints;
     var yAjout = vecteurY / nbrPoints;
+    //console.log("ajout" + xAjout+","+yAjout);
     
-    // Sauvegarde des points courants de la balle
-    var xCourant = this.Gball.x;
-    var yCourant = this.Gball.y;
-    
+   
     // Stockage des points calcules dans le tableau
-    for (i=0; i < nbrPoints; i++)
+    for (var j=0; j < nbrPoints; j++)
     {
       // On increment x et y avec le vecteur calcule ci-dessus qui va vers le point de collision
       xCourant = xCourant + xAjout;
       yCourant = yCourant + yAjout;
-      
+      //console.log("courants " + xCourant + "," + yCourant);
       // On cree le point correspondant
       var point = new coordonneesPoint(xCourant,yCourant);
       
       // On enregistre le point
-      this.tabPosBalle[i] = point;
+      this.tabPosBalle[j] = point;
       //alert("X : " + xCourant + "    Y : " + yCourant)
     }
+    //console.log(this.tabPosBalle);
   };
 
 
@@ -212,13 +221,15 @@ function Game(nomJoueur) {
         this.scene.clear();   
   };
 
+
   /*
   Calcule la position de la balle, efface la scene, et redessine la balle
   */
-  this.setBall = function(posX, posY)
+  this.setBall = function(k)
   {
-    this.Gball.x = (posX * this.scene.getWidth())/100;
-    this.Gball.y = (posY * this.scene.getHeight())/100;
+
+    this.Gball.x = this.tabPosBalle[k].x;
+    this.Gball.y = this.tabPosBalle[k].y;
               
     // Display of the ball
     this.scene.clear();
@@ -227,7 +238,7 @@ function Game(nomJoueur) {
 
 
   this.moveSlider = function(slider, pos){	
-    console.log('Avant : ' +slider.a.y + ' ' + pos + ' ' + slider.l);
+    //console.log('Avant : ' +slider.a.y + ' ' + pos + ' ' + slider.l);
     
     ay = (pos/100) * this.scene.getHeight() - (slider.l/2);
     
@@ -238,7 +249,7 @@ function Game(nomJoueur) {
         this.nw.sendBouge(pos);
     }
     
-    console.log('apres : ' +slider.a.y);
+    //console.log('apres : ' +slider.a.y);
     this.scene.clear();
     this.scene.drawAll();
   };
