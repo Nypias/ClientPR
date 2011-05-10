@@ -119,11 +119,22 @@ function Game(nomJoueur) {
     */
     i = 0;
     try {
-        affichageBalle = setInterval("this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y) ; i++;",difference/nombrePoints);
+        this.affichageBalle = setInterval("this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y) ; i++;",difference/nombrePoints);
     }
     catch (err) {
-        clearInterval(affichageBalle);
+        clearInterval(this.affichageBalle);
     }
+    
+    /* Peut etre essayer une technique comme :
+       for (i = 0; i < nombrePoints; i++)
+       {
+            // Affiche la balle
+            this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y)
+            
+            // Temps d'attente : au bout de "difference/nombrePoints", on appelle une fonction vide et on continue donc
+            setTimeOut(function(){}, difference/nombrePoints);
+       }
+    */
     
     // A la fin de la methode, pour eviter les erreurs, on refixe la balle courante sur le point de collision
     this.Gball.x = posX;
@@ -137,7 +148,7 @@ function Game(nomJoueur) {
   */
   this.nouveauPaquetTrajectoire = function ()
   {
-        clearInterval(affichageBalle);
+        clearInterval(this.affichageBalle);
   };
 
   /* 
@@ -160,7 +171,7 @@ function Game(nomJoueur) {
   this.calculPositionsBalle = function(posX,posY,nbrPoints)
   {
     // Initialisation d'un nouveau tableau ou l'on va stocker les points
-    this.tabPosBalle = new Array;
+    this.tabPosBalle = new Array(nbrPoints);
     
     /* Calcul du vecteur allant du point courant de la balle vers le point de collision
       La position de la balle est normalise car donnee en parametre de la fonction en pourcentage.
