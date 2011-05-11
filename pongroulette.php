@@ -22,7 +22,7 @@
     <script src="js/jquery.jkey-1.1.js" type="text/javascript"></script> 
     <script type="text/javascript">
       var game = null;
-      var nom = <?php echo $_POST['nomdujoueur']; ?>
+      var nom = '<?php echo $_POST['nomdujoueur']; ?>';
       $(document).ready(function(){
         game = new Game(nom); 
         game.game();

@@ -40,7 +40,10 @@ function Network (game){
       }
     }
     else if(data.msg == "Collision")
-      events.onCollision();        // TODO : A coder
+    {
+      console.log("Collision : " + data.status);
+      game.gestionCollision(data.status);
+    }
     else if (data.msg == "Trajectoire")
     {
       game.nouveauPaquetTrajectoire();
@@ -82,7 +85,7 @@ function Network (game){
   };
   
   this.broadcast = function(msg){
-    console.log(JSON.stringify(msg));
+    //console.log(JSON.stringify(msg));
     if (ws.readyState == 1)
         ws.send(JSON.stringify(msg));
     else

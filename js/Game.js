@@ -11,6 +11,24 @@ var DIMENSION_BALLE = 5;
  */
 function Game(nomJoueur) {
 
+  this.gestionCollision = function(status)
+  {
+      console.log(status);
+      if (status == "MISS")
+      {
+         // On arrete la trajectoire si elle a commence
+         clearInterval(this.affichageBalle);
+         
+         // Et on remet la balle au milieu du terrain
+         this.Gball.x = this.scene.getWidth()/2;
+         this.Gball.y = this.scene.getHeigth()/2;
+         
+         // On dessine la balle
+         this.scene.clear();
+         this.scene.drawAll();
+      }
+  };
+
   /*
    * Ajoute un joueur au tableau de joueurs.
    * 
@@ -98,7 +116,7 @@ function Game(nomJoueur) {
        C'est a dire que 20 points seront calcules sur la droite qui va du point actuel de la balle
           au point de collision
     */
-    var nombrePoints = 60;
+    var nombrePoints = 120;
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
@@ -124,21 +142,11 @@ function Game(nomJoueur) {
     catch (err) {
         clearInterval(this.affichageBalle);
     }
-    
-    /* Peut etre essayer une technique comme :
-       for (i = 0; i < nombrePoints; i++)
-       {
-            // Affiche la balle
-            this.setBall(this.tabPosBalle[i].x, this.tabPosBalle[i].y)
-            
-            // Temps d'attente : au bout de "difference/nombrePoints", on appelle une fonction vide et on continue donc
-            setTimeOut(function(){}, difference/nombrePoints);
-       }
-    */
-    
+    finally {
     // A la fin de la methode, pour eviter les erreurs, on refixe la balle courante sur le point de collision
     this.Gball.x = posX;
     this.Gball.y = posY;
+    }
 
   };
   
