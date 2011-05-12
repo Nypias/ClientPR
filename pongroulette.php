@@ -41,6 +41,10 @@
       <p class="instructions">
         Le joueur contrôle sa raquette avec les flèches "Haut" et "Bas" du clavier.
       </p>
+	  <p class="scores">Voici les scores :</p>
+	  <table id="scoresTbl">
+	    <td>Non connecté encore.</td>
+	  </table>
     </div>
   </body>
 </html>

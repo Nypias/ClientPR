@@ -41,10 +41,11 @@ function Game(nomJoueur) {
   this.setJoueurs = function(tabJoueursArg)
   {
     console.log("Fonction setJoueurs appelée.");
-    
+    document.getElementById("scoresTbl").children[0].innerHTML = "";
     var longueurTab = 0;
     for (key in tabJoueursArg){ 
         longueurTab++;
+		document.getElementById("scoresTbl").children[0].innerHTML += "<tr><td>" + key + "</td><td>" + tabJoueursArg[key]['points'] + "</td></tr>"
     }
     console.log("Taille : " + longueurTab);
     

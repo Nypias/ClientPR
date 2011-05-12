@@ -56,6 +56,20 @@
    color: rgba(255,255,255,0.6);
  }
  
+ #playground .scores, #playground #scoresTbl {
+   text-align: center;
+   font-size: 11pt;
+   color: rgba(255,255,255,0.6);
+ }
+ 
+ #playground #scoresTbl, #playground #scoresTbl td {
+   border:thin solid white;
+   border-collapse:collapse;
+   padding:3px;
+   margin-left: auto; 
+   margin-right: auto; 
+ }
+ 
 #GameZone
 {
    border-top:3px solid white;
