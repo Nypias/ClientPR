@@ -21,7 +21,7 @@ function Game(nomJoueur) {
          
          // Et on remet la balle au milieu du terrain
          this.Gball.x = this.scene.getWidth()/2;
-         this.Gball.y = this.scene.getHeigth()/2;
+         this.Gball.y = this.scene.getHeight()/2;
          
          // On dessine la balle
          this.scene.clear();
