@@ -4,13 +4,7 @@
     <title>Pongroulette</title>
     <meta charset="utf-8" />
     <link href="pongroulette.css" rel="stylesheet" />
-    <style>
-    #GameZone
-    {
-      border:3px solid black;
-      margin:0 auto;
-    }
-    </style>
+
     <script src="js/Game.js" type="text/javascript"></script> 
     <script src="js/PongZone.js" type="text/javascript"></script> 
     <script src="js/Network.js" type="text/javascript"></script> 

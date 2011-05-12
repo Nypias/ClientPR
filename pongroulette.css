@@ -56,6 +56,13 @@
    color: rgba(255,255,255,0.6);
  }
  
+#GameZone
+{
+   border-top:3px solid white;
+   border-bottom:3px solid white;
+   margin:0 auto;
+}
+ 
  h2 {
    width: 800px;
    margin: auto;
