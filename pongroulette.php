@@ -33,7 +33,7 @@
     </script>
   </head>
   <body>
-    <h2>PongRoulette</h1>
+    <h1>PongRoulette</h1>
     <div id="playground">
       <canvas id="GameZone" width="800" height="350">
         Navigateur ne supporte pas le HTML5 Canvas.
