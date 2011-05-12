@@ -42,16 +42,24 @@ function Game(nomJoueur) {
   {
     console.log("Fonction setJoueurs appelée.");
     
+    var longueurTab = 0;
+    for (key in tabJoueursArg){ 
+        longueurTab++;
+    }
+    console.log("Taille : " + longueurTab);
+    
     // Verifie s'il y a un nouveau joueur
-    if (this.tabJoueurs.length !== tabJoueursArg.players.length)
+    if (this.tabJoueurs.length !== longueurTab)
     {
+        console.log("Nouveau Joueur ?");
         var i=0;
-        for (i=0; i < tabJoueursArg.players.length; i++)
+        for (key in tabJoueursArg)
         {
-            if (!this.tabJoueurs[tabJoueursArg.players[i]])
-            {   // On cree le nouveau joueur
+        console.log(tabJoueursArg[key]);
+            if (!this.tabJoueurs[tabJoueursArg[key]])
+            {   console.log("Axe : " + tabJoueursArg[key].axe);
                 // On regarde la valeur de axe dans tabJoueurs pour voir ou positionner la raquette
-                                this.calculAncreJoueur(tabJoueursArg[i],this.tabJoueursArg.players[i].axe);
+                                this.calculAncreJoueur(tabJoueursArg[key],tabJoueursArg[key].axe);
             }
         }
     }
@@ -79,11 +87,12 @@ function Game(nomJoueur) {
       }
       else if (axe === 1)
       {
+        console.log("Axe = 1");
             // Raquette a droite
-            ancreDepart.x = 0.99*this.scene.getWidth()-7;
-            ancreDepart.y = 0.4*this.scene.getHeight();
+            ancreDepart.x = this.scene.getWidth()-7;
+            ancreDepart.y = 0;
             ancreArrivee.x = ancreDepart.x;
-            ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
+            ancreArrivee.y = this.scene.getHeight();
             this.addJoueur(nom,ancreDepart,ancreArrivee);
       }
   };
@@ -278,7 +287,7 @@ function Game(nomJoueur) {
   this.game = function()
   {
       // Joueurs
-      this.tabJoueurs = new Array(1);	            // A CHANGER       
+      this.tabJoueurs = new Array();	            // A CHANGER       
       
       this.nomJ = nomJoueur;
       
@@ -298,8 +307,7 @@ function Game(nomJoueur) {
       this.scene.add("Balle",this.Gball);
       
       // Ajout d'un joueur
-      this.calculAncreJoueur(this.nomJ,0);  // A gauche
-      //this.calculAncreJoueur("Mathieu",1);
+      //this.calculAncreJoueur(this.nomJ,0);  // A gauche
 
       // Connection au Serveur
       this.nw.connect();

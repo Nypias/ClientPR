@@ -29,9 +29,12 @@ function Network (game){
     //       dans le tableaux des actions, et ces fonctions devrait être
     //       implémentée ensuite dans Game, pour éviter une dépendance de
     //       Network dans son initialisation.
-    
-    if(data.msg == "Gstat")        // Nombre de joueurs et score
+        
+    if(data.msg == "GStat")        // Nombre de joueurs et score
+    {
+      console.log("Dans GStat");
       game.setJoueurs(data.players);
+    }
     else if(data.msg == "SyncJ"){    // Position des raquettes
       console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
