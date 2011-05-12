@@ -23,13 +23,10 @@
         $(window).jkey('up, down, left, right', function(key){
           console.log(key);
           if (key == 'up'){
-              //alert(game.tabJoueurs['Thomas'].position);
-              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].position - 4);
+              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].slider.position - 4);
           }
           else if (key == 'down'){
-              //alert(game.tabJoueurs['Thomas'].position);
-              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].position + 4);
-          
+              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].slider.position + 4);
           }
         });
       });

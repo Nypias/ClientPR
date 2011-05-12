@@ -1,37 +1,54 @@
-function Slider(ax, ay, bx, by){
+function Slider(ax, ay, bx, by, positionR, tailleSlider)
+// position correspond a la position du bord gauche de la raquette en pourcentage
+{
   var couleurSlider = 'rgb(255,255,255)';
-  this.a = {};
-  this.b = {};
+  this.position = positionR;
+  this.positionPixels = {};
+  this.ancreDep = {};
+  this.ancreArr = {};
   this.ratio = 5;
+  this.taille = tailleSlider;
+  this.tailleRaqDep = 0.4;
+  this.tailleRaqArr = 0.6;
 
-  this.a.x = ax;
-  this.a.y = ay;
-  this.l = Math.sqrt(Math.pow(ax - bx, 2) + Math.pow(ay - by, 2));
-  //this.h = (this.l / 100) * this.ratio;
-  //alert(this.h);
+  this.ancreDep.x = ax;
+  this.ancreDep.y = ay;
+  this.ancreArr.x = bx;
+  this.ancreArr.y = by;
+  this.longueur = Math.sqrt(Math.pow((this.ancreArr.x - this.ancreDep.x)*this.tailleRaqArr - (this.ancreArr.x - this.ancreDep.x)*this.tailleRaqDep, 2) +
+           Math.pow((this.ancreArr.y - this.ancreDep.y)*this.tailleRaqArr - (this.ancreArr.y - this.ancreDep.y)*this.tailleRaqDep, 2));
+  this.positionPixels.x = ((this.ancreArr.x - this.ancreDep.x)*this.position)/100;
+  this.positionPixels.y = ((this.ancreArr.y - this.ancreDep.y)*this.position)/100;
+
   this.h = 7;
-  this.angle = Math.abs(Math.asin((this.a.y - by) / this.l)) + Math.PI;
+  this.angle = /*Math.abs(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur)) +*/ Math.PI/2 ;
+  //console.log(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur));
 
   this.draw = function(ctx){
+  console.log(this.positionPixels.x + "    " + this.positionPixels.y);
     ctx.fillStyle = couleurSlider;
     ctx.save();
-    ctx.translate(this.a.x, this.a.y);
-    ctx.rotate(this.angle);
+    ctx.translate(this.positionPixels.x, this.positionPixels.y);
+    //ctx.rotate(this.angle);
     ctx.beginPath();
-    ctx.lineTo(-this.l, 0);
-    ctx.lineTo(-this.l, this.h);
-    ctx.lineTo(0, this.h);
+    ctx.lineTo(0, this.longueur);
+    ctx.lineTo(this.h, this.longueur);
+    ctx.lineTo(this.h, 0);
     ctx.lineTo(0, 0);
     ctx.fill();
     ctx.restore();
   };
+  
+  this.changePosition = function (pos)
+  {
+    this.position = pos;
+    this.positionPixels.x = ((this.ancreArr.x - this.ancreDep.x)*this.position)/100;
+    this.positionPixels.y = ((this.ancreArr.y - this.ancreDep.y)*this.position)/100;
+  };
 
   this.moveTo = function(ax, ay){
-    this.a.x = ax;
-    this.a.y = ay;
+    this.position.x = ax;
+    this.position.y = ay;
   };
-  
-  this.slide = function(distance){
 
-  };
 }

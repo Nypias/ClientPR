@@ -71,32 +71,29 @@ function Game(nomJoueur) {
       if (axe === 0)
       {
           // Raquette a gauche
-          ancreDepart.x = 0.01*this.scene.getWidth();
-          ancreDepart.y = 0.3*this.scene.getHeight();
-          ancreArrivee.x = ancreDepart.x;
-          ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-          this.addJoueur(nom,ancreDepart,ancreArrivee,50);	
+          ancreDepart.x = 0;
+          ancreDepart.y = 0;
+          ancreArrivee.x = 0;
+          ancreArrivee.y = this.scene.getHeight();
+          this.addJoueur(nom,ancreDepart,ancreArrivee);	
       }
       else if (axe === 1)
       {
             // Raquette a droite
             ancreDepart.x = 0.99*this.scene.getWidth()-7;
-            ancreDepart.y = 0.3*this.scene.getHeight();
+            ancreDepart.y = 0.4*this.scene.getHeight();
             ancreArrivee.x = ancreDepart.x;
             ancreArrivee.y = this.scene.getHeight() - ancreDepart.y;
-            this.addJoueur(nom,ancreDepart,ancreArrivee,50);
+            this.addJoueur(nom,ancreDepart,ancreArrivee);
       }
   };
 
     // Ajoute un joueur
   this.addJoueur = function(nom, ancre1, ancre2, pos)
   {
-    var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y);
+    var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y,40,100);
     this.scene.add('S'+nom, sliderJ);
-    this.tabJoueurs[nom] = {ancreDep : ancre1,
-                ancreArr : ancre2,
-                position : pos,
-                slider: sliderJ};	    
+    this.tabJoueurs[nom] = {slider: sliderJ};	    
   };
 
   // Supprime un joueur
@@ -246,14 +243,12 @@ function Game(nomJoueur) {
 
 
   this.moveSlider = function(slider, pos){	
-    //console.log('Avant : ' +slider.a.y + ' ' + pos + ' ' + slider.l);
     
-    ay = (pos/100) * this.scene.getHeight() - (slider.l/2);
     
-    if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
+    if (pos > 0 && pos < 80)
     {
-        slider.a.y = ay;
-        this.tabJoueurs[this.nomJ].position = pos;    
+        console.log("Position : " + pos);
+        slider.changePosition(pos); 
         this.nw.sendBouge(pos);
     }
     
@@ -263,14 +258,13 @@ function Game(nomJoueur) {
   };
     
   this.moveSliderServer = function(slider, pos){	
-    ay = (pos/100) * this.scene.getHeight() - (slider.l/2);
-    
-    if (ay > 0 && (ay + slider.l) < this.scene.getHeight())
+     
+    if (pos > 0 && pos < 80)
     {
-        slider.a.y = ay;
-        this.tabJoueurs[this.nomJ].position = pos;    
+        slider.changePosition(pos); 
     }
     
+    //console.log('apres : ' +slider.a.y);
     this.scene.clear();
     this.scene.drawAll();
   };
@@ -312,16 +306,6 @@ function Game(nomJoueur) {
     
       setTimeout(function() {}, 1000); 
       // Envoi du message Hello : connexion d'un nouveau joueur
-
-
-      /*this.ancres = new Array;       // Ancres des slides
-      this.createSlides();    // On cree les slides en fonction des joueurs
-      this.setSlides();       // On les dessine*/
-      
-
-      if(this.Gpongzone) {
-        this.Gpongzone = PongZone(this.ancres);
-      }
     
       // On dessine tout
       this.scene.drawAll();
