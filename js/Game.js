@@ -16,7 +16,13 @@ function Game(nomJoueur) {
       console.log(status);
       if (status == "MISS")
       {
-         // On arrete la trajectoire si elle a commence
+         this.reInitialisationBalle();
+      }
+  };
+  
+  this.reInitialisationBalle = function()
+  {
+    // On arrete la trajectoire si elle a commence
          clearInterval(this.affichageBalle);
          
          // Et on remet la balle au milieu du terrain
@@ -26,8 +32,7 @@ function Game(nomJoueur) {
          // On dessine la balle
          this.scene.clear();
          this.scene.drawAll();
-      }
-  };
+  }
 
   /*
    * Ajoute un joueur au tableau de joueurs.
@@ -40,7 +45,7 @@ function Game(nomJoueur) {
    */
   this.setJoueurs = function(tabJoueursArg)
   {
-    console.log("Fonction setJoueurs appelée.");
+    //console.log("Fonction setJoueurs appelée.");
     document.getElementById("scoresTbl").children[0].innerHTML = "";
     var longueurTab = 0;
     var longueurTabJoueurs = 0;
@@ -53,33 +58,33 @@ function Game(nomJoueur) {
         longueurTabJoueurs++;
     }
     
-    console.log("Taille Arg : " + longueurTab + "     Taille Tab Joueurs : " + longueurTabJoueurs);
+    //console.log("Taille Arg : " + longueurTab + "     Taille Tab Joueurs : " + longueurTabJoueurs);
     
 
      
     // Verifie s'il y a un nouveau joueur
     if (longueurTabJoueurs < longueurTab)
     {
-        console.log("Taille differente");
+        //console.log("Taille differente");
         var i=0;
         for (key in tabJoueursArg)
         {
-        console.log(key + " : " + tabJoueursArg[key]);
+        //console.log(key + " : " + tabJoueursArg[key]);
             if (!this.tabJoueurs[tabJoueursArg[key]])
-            {   console.log("Ajout Joueur sur l'axe " + tabJoueursArg[key].axe);
+            {   //console.log("Ajout Joueur sur l'axe " + tabJoueursArg[key].axe);
                 // On regarde la valeur de axe dans tabJoueurs pour voir ou positionner la raquette
                 this.calculAncreJoueur(key,tabJoueursArg[key].axe);
             }
         }
-        console.log("Affichage Joueurs Apres");
+        //console.log("Affichage Joueurs Apres");
         for (key in this.tabJoueurs)    
         {
-        console.log("Joueur " + key + ":" + this.tabJoueurs[key]);
+            //console.log("Joueur " + key + ":" + this.tabJoueurs[key]);
         }
     }
     else
     {   // On detruit un joueur
-        console.log("Destruction d'un joueur");
+        //console.log("Destruction d'un joueur");
         for (key in this.tabJoueurs)
         {
             if (!tabJoueursArg[key])
@@ -101,7 +106,7 @@ function Game(nomJoueur) {
   {
       var ancreDepart = {x:0, y:0};
       var ancreArrivee = {x:0, y:0};
-      console.log("Entree sur le calcul d'ancre avec axe = " + axe);
+      //console.log("Entree sur le calcul d'ancre avec axe = " + axe);
       if (axe === 0)
       {
           // Raquette a gauche
@@ -128,8 +133,8 @@ function Game(nomJoueur) {
     var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y,50,100);
     this.scene.add('S'+nom, sliderJ);
     this.tabJoueurs[nom] = {slider: sliderJ};	
-    
-    console.log("Add Joueur : " + nom);
+    this.reInitialisationBalle(); 
+    //console.log("Add Joueur : " + nom);
   };
 
   // Supprime un joueur et son slider
@@ -137,6 +142,7 @@ function Game(nomJoueur) {
   {
     delete this.tabJoueurs[nom];
     this.scene.suppr('S'+nom);
+    this.reInitialisationBalle();    
   };
 
     
@@ -284,7 +290,7 @@ function Game(nomJoueur) {
     
     if (pos > 10 && pos < 90)
     {
-        console.log("Position : " + pos);
+        //console.log("Position : " + pos);
         slider.changePosition(pos); 
         this.nw.sendBouge(pos);
     }
