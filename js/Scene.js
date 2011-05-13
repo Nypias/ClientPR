@@ -11,6 +11,17 @@ function Scene() {
         return;
     }
   };
+  
+  this.suppr = function (name)
+  {
+     delete(this.components[name]);
+     
+     console.log("Suppression Slider Scene");
+     for (key in this.components)
+     {
+        console.log(key);
+     }
+  };
 
   this.drawAll = function()
   {

@@ -29,6 +29,7 @@ function Network (game){
     //       dans le tableaux des actions, et ces fonctions devrait être
     //       implémentée ensuite dans Game, pour éviter une dépendance de
     //       Network dans son initialisation.
+    console.log(data.msg);    
         
     if(data.msg == "GStat")        // Nombre de joueurs et score
     {
@@ -38,7 +39,7 @@ function Network (game){
     else if(data.msg == "SyncJ"){    // Position des raquettes
       console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
-        //console.log(data.raquettes[key]);
+        console.log("Raquettes SyncJ : " + data.raquettes[key]);
         game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
       }
     }

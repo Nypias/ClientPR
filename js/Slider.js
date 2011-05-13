@@ -11,21 +11,25 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.tailleRaqDep = 0.4;
   this.tailleRaqArr = 0.6;
 
+  console.log("Ancres : (" + ax + ";" + ay + "),(" + bx + ";" + by + ")");
+
   this.ancreDep.x = ax;
   this.ancreDep.y = ay;
   this.ancreArr.x = bx;
   this.ancreArr.y = by;
   this.longueur = Math.sqrt(Math.pow((this.ancreArr.x - this.ancreDep.x)*this.tailleRaqArr - (this.ancreArr.x - this.ancreDep.x)*this.tailleRaqDep, 2) +
            Math.pow((this.ancreArr.y - this.ancreDep.y)*this.tailleRaqArr - (this.ancreArr.y - this.ancreDep.y)*this.tailleRaqDep, 2));
-  this.positionPixels.x = ((this.ancreArr.x - this.ancreDep.x)*this.position)/100;
-  this.positionPixels.y = ((this.ancreArr.y - this.ancreDep.y)*this.position)/100;
+  this.positionPixels.x = (((this.ancreArr.x - this.ancreDep.x)*(this.position - 10))/100)+this.ancreDep.x;
+  this.positionPixels.y = (((this.ancreArr.y - this.ancreDep.y)*(this.position - 10))/100)+this.ancreDep.y;
 
   this.h = 7;
   this.angle = /*Math.abs(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur)) +*/ Math.PI/2 ;
   //console.log(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur));
 
+  console.log("X : " + this.positionPixels.x + "       Y : " + this.positionPixels.y);
+  console.log("Longueur : " + this.longueur);
+
   this.draw = function(ctx){
-  console.log(this.positionPixels.x + "    " + this.positionPixels.y);
     ctx.fillStyle = couleurSlider;
     ctx.save();
     ctx.translate(this.positionPixels.x, this.positionPixels.y);
@@ -42,8 +46,8 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.changePosition = function (pos)
   {
     this.position = pos;
-    this.positionPixels.x = ((this.ancreArr.x - this.ancreDep.x)*this.position)/100;
-    this.positionPixels.y = ((this.ancreArr.y - this.ancreDep.y)*this.position)/100;
+    this.positionPixels.x = (((this.ancreArr.x - this.ancreDep.x)*(this.position - 10))/100)+this.ancreDep.x;
+    this.positionPixels.y = (((this.ancreArr.y - this.ancreDep.y)*(this.position - 10))/100)+this.ancreDep.y;
   };
 
   this.moveTo = function(ax, ay){
