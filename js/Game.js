@@ -48,6 +48,10 @@ function Game(nomJoueur) {
     //console.log("Fonction setJoueurs appelée.");
     var longueurTab = 0;
     var longueurTabJoueurs = 0;
+	
+	document.getElementById("leftScore").innerHTML = "";
+	document.getElementById("rightScore").innerHTML = "";
+	
     for (key in tabJoueursArg){ 
         longueurTab++;
 		var axeScore;
