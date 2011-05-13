@@ -34,7 +34,7 @@
   </head>
   <body>
     <h1>PongRoulette</h1>
-	<p style="float:left; text-align:right">lol<p>
+	<p id="leftScore">Score gauche<p>
     <div id="playground">
       <canvas id="GameZone" width="800" height="350">
         Navigateur ne supporte pas le HTML5 Canvas.
@@ -42,11 +42,7 @@
       <p class="instructions">
         Le joueur contrôle sa raquette avec les flèches "Haut" et "Bas" du clavier.
       </p>
-	  <p class="scores">Voici les scores :</p>
-	  <table id="scoresTbl">
-	    <td>Non connecté encore.</td>
-	  </table>
     </div>
-	<p style="float:right; text-align:left">lol<p>
+	<p id="rightScore">Score droit<p>
   </body>
 </html>
