@@ -71,9 +71,7 @@ function Game(nomJoueur) {
     }
     
     //console.log("Taille Arg : " + longueurTab + "     Taille Tab Joueurs : " + longueurTabJoueurs);
-    
-
-     
+      
     // Verifie s'il y a un nouveau joueur
     if (longueurTabJoueurs < longueurTab)
     {
@@ -94,16 +92,21 @@ function Game(nomJoueur) {
             //console.log("Joueur " + key + ":" + this.tabJoueurs[key]);
         }
     }
-    else
-    {   // On detruit un joueur
-        //console.log("Destruction d'un joueur");
+    else if (longueurTabJoueurs > longueurTab)
+    {   // On detruit un joueur        
+        // On recree completement l'aire de jeu
+        // Ex : Mettre joueur de droite a gauche
         for (key in this.tabJoueurs)
         {
-            if (!tabJoueursArg[key])
-            {
-                this.supprJoueur(key);
-            }
+            this.supprJoueur(key);
         }
+        // Reajout de tous les joueurs
+        for (key in tabJoueursArg)
+        {
+            this.calculAncreJoueur(key,tabJoueursArg[key].axe);
+        }
+        this.scene.clear();
+        this.scene.drawAll();
     }
     
   };
@@ -121,6 +124,7 @@ function Game(nomJoueur) {
       //console.log("Entree sur le calcul d'ancre avec axe = " + axe);
       if (axe === 0)
       {
+        //console.log("AXE = 0");
           // Raquette a gauche
           ancreDepart.x = 0;
           ancreDepart.y = 0;
@@ -164,9 +168,6 @@ function Game(nomJoueur) {
     //this.ancienTime = collisionTime;
         
     /* Nombre de points a calculer
-       Initialise au depart par 20
-       C'est a dire que 20 points seront calcules sur la droite qui va du point actuel de la balle
-          au point de collision
     */
     var nombrePoints = 120;
     
