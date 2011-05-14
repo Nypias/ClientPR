@@ -66,7 +66,8 @@ function Game(nomJoueur) {
 		document.getElementById(axeScore).innerHTML = key + "<br />" + tabJoueursArg[key]['points'];
     }
     
-        for (key in this.tabJoueurs){
+    for (key in this.tabJoueurs)
+    {
         longueurTabJoueurs++;
     }
     
@@ -94,19 +95,13 @@ function Game(nomJoueur) {
     }
     else if (longueurTabJoueurs > longueurTab)
     {   // On detruit un joueur        
-        // On recree completement l'aire de jeu
-        // Ex : Mettre joueur de droite a gauche
         for (key in this.tabJoueurs)
         {
-            this.supprJoueur(key);
+            if (!tabJoueursArg[key])
+            {
+                this.supprJoueur(key);
+            }
         }
-        // Reajout de tous les joueurs
-        for (key in tabJoueursArg)
-        {
-            this.calculAncreJoueur(key,tabJoueursArg[key].axe);
-        }
-        this.scene.clear();
-        this.scene.drawAll();
     }
     
   };
