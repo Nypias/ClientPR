@@ -23,10 +23,10 @@
         $(window).jkey('up, down, left, right', function(key){
           console.log(key);
           if (key == 'up'){
-              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].slider.position - 3);
+              game.moveSlider(game.tabJoueurs[game.nomJ].slider, game.tabJoueurs[game.nomJ].slider.position - 3);
           }
           else if (key == 'down'){
-              game.moveSlider(game.tabJoueurs[nom].slider, game.tabJoueurs[nom].slider.position + 3);
+              game.moveSlider(game.tabJoueurs[game.nomJ].slider, game.tabJoueurs[game.nomJ].slider.position + 3);
           }
         });
       });

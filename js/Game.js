@@ -11,6 +11,11 @@ var DIMENSION_BALLE = 5;
  */
 function Game(nomJoueur) {
 
+  this.changePseudo = function(newPseudo)
+  {    
+    this.nomJ = newPseudo;  
+  };
+
   this.gestionCollision = function(status)
   {
       console.log(status);
@@ -88,10 +93,6 @@ function Game(nomJoueur) {
             }
         }
         //console.log("Affichage Joueurs Apres");
-        for (key in this.tabJoueurs)    
-        {
-            //console.log("Joueur " + key + ":" + this.tabJoueurs[key]);
-        }
     }
     else if (longueurTabJoueurs > longueurTab)
     {   // On detruit un joueur        
@@ -139,7 +140,7 @@ function Game(nomJoueur) {
   };
 
     // Ajoute un joueur
-  this.addJoueur = function(nom, ancre1, ancre2, pos)
+  this.addJoueur = function(nom, ancre1, ancre2)
   {
     var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y,50,100);
     this.scene.add('S'+nom, sliderJ);
