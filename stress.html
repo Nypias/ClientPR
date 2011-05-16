@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pongroulette STRESS TEST</title>
+    <meta charset="utf-8" />
+    <link href="pongroulette.css" rel="stylesheet" />
+
+    <script src="js/StressGame.js" type="text/javascript"></script>  
+    <script src="js/StressNetwork.js" type="text/javascript"></script> 
+    <script src="js/jquery-1.6.min.js" type="text/javascript"></script> 
+    <script type="text/javascript">
+      var game = null;
+      var nom = 'clement';
+	  var games = new Array(200);
+	  
+	  timer = function(){
+		for (i = 0; i<games.length; i++)
+			{
+				if (games[i] != null)
+				{
+					games[i].bouge();
+				}
+			}
+	  }
+	  
+      $(document).ready(function(){
+		for (i = 0; i<games.length; i++)
+		{
+			console.log("connection " + i);
+			games[i] = new Game(nom, i); 
+			games[i].game();
+		}
+		setInterval("timer();", 1000);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Stress Test pongroulette</h1>
+	<p id="log"></p>
+  </body>
+</html>
