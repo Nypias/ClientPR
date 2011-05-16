@@ -11,6 +11,11 @@ var DIMENSION_BALLE = 5;
  */
 function Game(nomJoueur) {
 
+  this.changePseudo = function(newPseudo)
+  {    
+    this.nomJ = newPseudo;  
+  };
+
   this.gestionCollision = function(status)
   {
       console.log(status);
@@ -66,14 +71,13 @@ function Game(nomJoueur) {
 		document.getElementById(axeScore).innerHTML = key + "<br />" + tabJoueursArg[key]['points'];
     }
     
-        for (key in this.tabJoueurs){
+    for (key in this.tabJoueurs)
+    {
         longueurTabJoueurs++;
     }
     
     //console.log("Taille Arg : " + longueurTab + "     Taille Tab Joueurs : " + longueurTabJoueurs);
-    
-
-     
+      
     // Verifie s'il y a un nouveau joueur
     if (longueurTabJoueurs < longueurTab)
     {
@@ -89,14 +93,9 @@ function Game(nomJoueur) {
             }
         }
         //console.log("Affichage Joueurs Apres");
-        for (key in this.tabJoueurs)    
-        {
-            //console.log("Joueur " + key + ":" + this.tabJoueurs[key]);
-        }
     }
-    else
-    {   // On detruit un joueur
-        //console.log("Destruction d'un joueur");
+    else if (longueurTabJoueurs > longueurTab)
+    {   // On detruit un joueur        
         for (key in this.tabJoueurs)
         {
             if (!tabJoueursArg[key])
@@ -121,6 +120,7 @@ function Game(nomJoueur) {
       //console.log("Entree sur le calcul d'ancre avec axe = " + axe);
       if (axe === 0)
       {
+        //console.log("AXE = 0");
           // Raquette a gauche
           ancreDepart.x = 0;
           ancreDepart.y = 0;
@@ -140,7 +140,7 @@ function Game(nomJoueur) {
   };
 
     // Ajoute un joueur
-  this.addJoueur = function(nom, ancre1, ancre2, pos)
+  this.addJoueur = function(nom, ancre1, ancre2)
   {
     var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y,50,100);
     this.scene.add('S'+nom, sliderJ);
@@ -164,9 +164,6 @@ function Game(nomJoueur) {
     //this.ancienTime = collisionTime;
         
     /* Nombre de points a calculer
-       Initialise au depart par 20
-       C'est a dire que 20 points seront calcules sur la droite qui va du point actuel de la balle
-          au point de collision
     */
     var nombrePoints = 120;
     

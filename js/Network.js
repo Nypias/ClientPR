@@ -39,7 +39,7 @@ function Network (game){
     else if(data.msg == "SyncJ"){    // Position des raquettes
       console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
-        console.log("Raquettes SyncJ : " + data.raquettes[key]);
+        console.log(key + " : Raquettes SyncJ : " + data.raquettes[key]);
         game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
       }
     }
@@ -52,6 +52,10 @@ function Network (game){
     {
       game.nouveauPaquetTrajectoire();
       game.calculPositionBalle(data.point[0][0],data.point[0][1],data.point[1]);
+    }
+    else if (data.msg == "newPseudo")
+    {
+        game.changePseudo(data.pseudo);
     }
     else
     {
