@@ -227,11 +227,11 @@ function Game(nomJoueur) {
     catch (err) {
         clearInterval(this.affichageBalle);
     }
-    finally {
+    /*finally {
     // A la fin de la methode, pour eviter les erreurs, on refixe la balle courante sur le point de collision
     this.Gball.x = posX;
     this.Gball.y = posY;
-    }
+    }*/
 
   };
   
@@ -384,7 +384,7 @@ function Game(nomJoueur) {
    this.animloop = function(){
        self.scene.clear();
        self.scene.drawAll();
-      requestAnimFrame(self.animloop, element);
+      requestAnimFrame(self.animloop, $('body')[0]);
     };
 
 
