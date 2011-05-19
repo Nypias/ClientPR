@@ -18,7 +18,7 @@ function Game(nomJoueur) {
 
   this.gestionCollision = function(status)
   {
-      console.log(status);
+      //console.log(status);
       if (status == "MISS")
       {
          this.reInitialisationBalle();
@@ -165,7 +165,7 @@ function Game(nomJoueur) {
         
     /* Nombre de points a calculer
     */
-    var nombrePoints = 120;
+    var nombrePoints = 60;
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
