@@ -201,7 +201,7 @@ function Game(nomJoueur) {
         
     /* Nombre de points a calculer*/
     console.log(timeC);
-    if (this.ancienTime == 0) {
+    if (this.ancienTime != 0) {
         var nombrePoints = Math.round((timeC*6)/240);
     }
     else {
