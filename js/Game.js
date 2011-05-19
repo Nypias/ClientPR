@@ -160,12 +160,17 @@ function Game(nomJoueur) {
     
   this.calculPositionBalle = function(posX,posY,collisionTime)
   {
-    //alert(collisionTime-this.ancienTime);
-    //this.ancienTime = collisionTime;
+    var timeC = collisionTime-this.ancienTime;
+    console.log("Difference : " + timeC);
+    this.ancienTime = collisionTime;
+    
         
     /* Nombre de points a calculer
     */
-    var nombrePoints = 60;
+    //var nombrePoints = 60;
+    console.log(timeC);
+    var nombrePoints = Math.round((timeC*6)/240);
+        console.log("Nombre de points : " + nombrePoints);
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
