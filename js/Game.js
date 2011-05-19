@@ -1,5 +1,17 @@
 var DIMENSION_BALLE = 5;
 
+// shim layer with setTimeout fallback  //STOLEN !!
+window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       || 
+        window.webkitRequestAnimationFrame || 
+        window.mozRequestAnimationFrame    || 
+        window.oRequestAnimationFrame      || 
+        window.msRequestAnimationFrame     || 
+        function(/* function */ callback, /* DOMElement */ element){
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
+
 /**
  * Gère le jeu, les mécaniques de jeu et la « boucle principale »
  * du jeu.
@@ -10,6 +22,8 @@ var DIMENSION_BALLE = 5;
  * @see Slider.js
  */
 function Game(nomJoueur) {
+
+    self = this;
 
   this.changePseudo = function(newPseudo)
   {    
@@ -39,8 +53,10 @@ function Game(nomJoueur) {
          this.ancienCollisionY = null;
          
          // On dessine la balle
-         this.scene.clear();
-         this.scene.drawAll();
+      /*window.mozRequestAnimationFrame(function() {
+	  self.scene.clear();
+          self.scene.drawAll();
+      });*/
   }
 
   /*
@@ -183,9 +199,7 @@ function Game(nomJoueur) {
     this.ancienCollisionY = (posY*this.scene.getHeight())/100;
     
         
-    /* Nombre de points a calculer
-    */
-    //var nombrePoints = 60;
+    /* Nombre de points a calculer*/
     console.log(timeC);
     if (this.ancienTime == 0) {
         var nombrePoints = Math.round((timeC*6)/240);
@@ -207,8 +221,7 @@ function Game(nomJoueur) {
     /* On affiche la balle toutes les "difference/nombrePoints" ms
        Le premier parametre en guillemet s'agit des fonctions qu'on va appeller toutes les "differences/nombrePoints" ms
        Le deuxieme parametre est le temps d'attente
-       Dans le premier parametre, on appelle la fonction setBall avec l'abscisse et l'ordonnee des points calcules (fonction 
-       qui affiche la balle) et on incremente i         
+       Dans le premier parametre, on appelle la fonction setBall avec l'abscisse et l'ordonnee des points calcules (fonction qui affiche la balle) et on incremente i         
        Un try catch est present pour prendre l'exception au cas ou on lit trop loin dans le tableau et que le point n'existe pas.
        Dans ce cas, on reset juste le setInterval.
     */
@@ -319,8 +332,10 @@ function Game(nomJoueur) {
   catch (err) {}
           
     // Display of the ball
-    this.scene.clear();
-    this.scene.drawAll();
+      /*window.mozRequestAnimationFrame(function() {
+	  self.scene.clear();
+	  self.scene.drawAll();
+      });*/
   };
   
   this.setBallXAndY = function(x,y)
@@ -329,8 +344,10 @@ function Game(nomJoueur) {
     this.Gball.y = y;
           
     // Display of the ball
-    this.scene.clear();
-    this.scene.drawAll();
+    /*window.mozRequestAnimationFrame(function() {  
+	self.scene.clear();
+	self.scene.drawAll();
+    });*/
   };
   
   this.moveSlider = function(slider, pos){	
@@ -344,8 +361,10 @@ function Game(nomJoueur) {
     }
     
     //console.log('apres : ' +slider.a.y);
-    this.scene.clear();
-    this.scene.drawAll();
+    /*window.mozRequestAnimationFrame(function() {
+	self.scene.clear();
+	self.scene.drawAll();
+    });*/
   };
     
   this.moveSliderServer = function(slider, pos){	
@@ -356,16 +375,24 @@ function Game(nomJoueur) {
     }
     
     //console.log('apres : ' +slider.a.y);
-    this.scene.clear();
-    this.scene.drawAll();
+    /*window.mozRequestAnimationFrame(function() {
+	self.scene.clear();
+	self.scene.drawAll();
+    });*/
   };
   
   this.connect = function()
   {
       this.nw.sendHello(this.nomJ);
   };
-   
-	
+
+   this.animloop = function(){
+       self.scene.clear();
+       self.scene.drawAll();
+      requestAnimFrame(self.animloop, element);
+    };
+
+
   this.game = function()
   {
       // Joueurs
@@ -391,17 +418,18 @@ function Game(nomJoueur) {
 
       // On ajoute la balle a la scene
       this.scene.add("Balle",this.Gball);
-      
+     
       // Ajout d'un joueur
       //this.calculAncreJoueur(this.nomJ,0);  // A gauche
 
       // Connection au Serveur
       this.nw.connect();
     
-      setTimeout(function() {}, 1000); 
+      setTimeout(function() {}, 1000);
       // Envoi du message Hello : connexion d'un nouveau joueur
     
       // On dessine tout
-      this.scene.drawAll();
+      this.animloop();
+    
   };
 }	
