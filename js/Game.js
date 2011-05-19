@@ -163,7 +163,6 @@ function Game(nomJoueur) {
   
   this.roomsStats = function(roomsNumber)
   {
-	console.log("lol");
 	document.getElementById("roomsStats").innerHTML = "Nombre de salles de jeu actuellement connectées : " + roomsNumber;
   }
 
