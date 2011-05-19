@@ -284,10 +284,12 @@ function Game(nomJoueur) {
   */
   this.setBall = function(k)
   {
-
+  try {
     this.Gball.x = this.tabPosBalle[k].x;
     this.Gball.y = this.tabPosBalle[k].y;
-              
+  }
+  catch (err) {}
+          
     // Display of the ball
     this.scene.clear();
     this.scene.drawAll();
