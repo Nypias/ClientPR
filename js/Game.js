@@ -34,6 +34,10 @@ function Game(nomJoueur) {
          this.Gball.x = this.scene.getWidth()/2;
          this.Gball.y = this.scene.getHeight()/2;
          
+         // On repositionne les anciens points de collision a null
+         this.ancienCollisionX = null;
+         this.ancienCollisionY = null;
+         
          // On dessine la balle
          this.scene.clear();
          this.scene.drawAll();
@@ -164,18 +168,32 @@ function Game(nomJoueur) {
   }
 
     
-  this.calculPositionBalle = function(posX,posY,collisionTime)
+  this.calculPositionBalle = function(posX, posY, collisionTime)
   {
     var timeC = collisionTime-this.ancienTime;
     console.log("Difference : " + timeC);
     this.ancienTime = collisionTime;
+
+    if (this.ancienCollisionX != null && this.ancienCollisionY != null){
+      this.setBallXAndY(this.ancienCollisionX, this.ancienCollisionY);
+    }
+    
+    //console.log('x : ' + this.ancienCollisionX + " y : " + this.ancienCollisionY);
+    
+    this.ancienCollisionX = (posX*this.scene.getWidth())/100;
+    this.ancienCollisionY = (posY*this.scene.getHeight())/100;
     
         
     /* Nombre de points a calculer
     */
     //var nombrePoints = 60;
     console.log(timeC);
-    var nombrePoints = Math.round((timeC*6)/240);
+    if (this.ancienTime == 0) {
+        var nombrePoints = Math.round((timeC*6)/240);
+    }
+    else {
+        var nombrePoints = 60;
+    }
         console.log("Nombre de points : " + nombrePoints);
     
     // Calcul du tableau de points
@@ -305,8 +323,17 @@ function Game(nomJoueur) {
     this.scene.clear();
     this.scene.drawAll();
   };
-
-
+  
+  this.setBallXAndY = function(x,y)
+  {
+    this.Gball.x = x;
+    this.Gball.y = y;
+          
+    // Display of the ball
+    this.scene.clear();
+    this.scene.drawAll();
+  };
+  
   this.moveSlider = function(slider, pos){	
     
     
@@ -352,12 +379,16 @@ function Game(nomJoueur) {
       this.nw = new Network(this);
       this.scene = new Scene();
       this.scene.attachCanvas("GameZone");
+      
 
       // Creation de la balle
       this.balle = { x : (this.scene.getWidth()/2), y : (this.scene.getHeight()/2), dX : 0, dY : 0};
       if(!this.Gball) {
         this.Gball = new Ball(DIMENSION_BALLE, this.balle.x, this.balle.y, true);
       }
+      
+      this.ancienCollisionX = null;
+      this.ancienCollisionY = null;
 
       // On ajoute la balle a la scene
       this.scene.add("Balle",this.Gball);
