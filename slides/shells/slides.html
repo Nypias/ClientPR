@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<title>PongRoulette Slides</title>
+
+<!-- Your Slides -->
+<!-- One section is one slide -->
+
+<section>
+    <h1>Pongroulette</h1>
+    <p style="text-align: center; margin-top: 150px;"><img src="./ponglogo.png" alt="" /></p>
+    <footer>Le jeu qui va vous faire aimer le Pong.</footer>
+</section>
+
+<section>
+    <h2>L'idée et le but</h2>
+    <ul>
+      <li>Montrer que HTML5 et JS peuvent être awesome</li>
+      <li>Faire un jeu sur le web sans Flash...</li>
+      <li>...et un jeu 2.0</li>
+    </ul>
+</section>
+
+<section>
+  <h2>Et maintenant... À vous !</h2>
+  <ul>
+    <p>Connectez-vous dès maintenant à cette adresse :</p>
+    <p style="text-align: center; font-size: 2.5rem; padding-top: 20pt;">
+      <a href="http://pongroulette.signez.fr/">pongroulette.signez.fr</a>
+    </p>
+  </ul>
+</section>
+
+<section>
+    <h2>Des technologies innovantes</h2>
+    <ul>
+        <li>HTML 5</li>
+        <li>Javascript</li>
+        <li>Canvas</li>
+        <li>Twisted! (Python Networking)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>...voire expérimentales</h2>
+    <ul>
+        <li>Websocket</li>
+        <li>mozFrameAnimationRequest</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Une totale organisation</h2>
+    <ul>
+        <li>Deux équipes :</li>
+        <ul>
+          <li>ServeurPR <br />
+            <ul>
+              <li>Un serveur qui s'occupe de tout</li>
+              <li>Une architecture qui supporte tout</li>
+            </ul>
+          </li>
+          <li>ClientPR <br />
+            <ul>
+              <li>Créer une interface innovante</li>
+              <li>Gérer le problème des petits CPUs</li>
+            </ul>
+          </li>
+        </ul>
+        <li>Git est notre ami !</li>
+    </ul>
+</section>
+
+<!-- Your Style -->
+<!-- Define the style of your presentation -->
+
+<!-- Maybe a font from http://www.google.com/webfonts ? -->
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet'>
+
+<style>
+  html { background-color: black; }
+  body {background-color: #00112b; }
+  /* A section is a slide. It's size is 800x600, and this will never change */
+  section {
+      font-family: 'Ubuntu','Trebuchet MS',Arial,sans-serif;
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      color: white;
+      overflow: hidden;
+  }
+  h1, h2, h3 {
+      margin-top: 50px;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      color: #ff6600;
+  }
+  ul {
+      margin: auto;
+      width: 85%;
+  }
+  ul li {
+    margin-bottom: 0.4em;
+  }
+  ul li ul li {
+    font-size: 1.4rem;
+    margin-bottom: 0.2em;
+  }
+  a { color: #449944; } a:hover {text-decoration: underline;}
+  footer { position: absolute; bottom: 50px; right: 50px; }
+
+  section {
+      -moz-transition: left 400ms linear 0s, opacity 350ms linear 0s;
+      -webkit-transition: left 400ms linear 0s, opacity 350ms linear 0s;
+      -o-transition: left 400ms linear 0s, opacity 350ms linear 0s;
+      -ms-transition: left 400ms linear 0s, opacity 350ms linear 0s;
+      transition: left 400ms linear 0s, opacity 350ms linear 0s;
+  }
+
+  /* Before */
+  section { left: -150%; opacity: 0; }
+  /* Now */
+  section[aria-selected] { left: 0; opacity: 1; }
+  /* After */
+  section[aria-selected] ~ section { left: +150%; opacity: 0; }
+</style>
+
+
+<!-- {{{{ *****************  DZSlides CORE 2.0b1 *************************** -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+<!-- *********************************************************************** -->
+
+<!-- This block of code is not supposed to be edited, but if you want to change the behavior of the slides, feel free to hack it ;) -->
+
+<!-- Default Style -->
+<style>
+  * { margin: 0; padding: 0; }
+  details {display: none;}
+  body {
+    width: 800px; height: 600px;
+    margin-left: -400px; margin-top: -300px;
+    position: absolute; top: 50%; left: 50%;
+    overflow: hidden;
+  }
+  section {
+    position: absolute;
+    pointer-events: none;
+    width: 100%; height: 100%;
+  }
+  section[aria-selected] { pointer-events: auto;}
+  body {display: none}
+  body.loaded {display: block}
+</style>
+
+<script>
+  var friendWindows = [];
+  var idx = 1;
+  var slides;
+
+  /* main() */
+
+  window.onload = function() {
+    slides = document.querySelectorAll("body > section");
+    onhashchange();
+    setSlide();
+    document.body.className = "loaded";
+    onresize();
+  }
+
+  /* Handle keys */
+
+  window.onkeydown = function(e) {
+    // Don't intercept keyboard shortcuts
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) {
+      return;
+    }
+    if ( e.keyCode == 37 // left arrow
+      || e.keyCode == 33 // page up
+    ) {
+      e.preventDefault();
+      back();
+    }
+    if ( e.keyCode == 39 // right arrow
+      || e.keyCode == 34 // page down
+    ) {
+      e.preventDefault();
+      forward();
+    }
+
+    if ( e.keyCode == 32) { // space
+        e.preventDefault();
+        toggleContent();
+    }
+  }
+
+  /* Adapt the size of the slides to the window */
+
+  window.onresize = function() {
+    var sx = document.body.clientWidth / window.innerWidth;
+    var sy = document.body.clientHeight / window.innerHeight;
+    var transform = "scale(" + (1/Math.max(sx, sy)) + ")";
+    document.body.style.MozTransform = transform;
+    document.body.style.WebkitTransform = transform;
+    document.body.style.OTransform = transform;
+    document.body.style.msTransform = transform;
+    document.body.style.transform = transform;
+  }
+  function getDetails(idx) {
+    var s = document.querySelector("section:nth-of-type("+ idx +")");
+    var d = s.querySelector("details");
+    return d?d.innerHTML:"";
+  }
+  window.onmessage = function(e) {
+    msg = e.data;
+    win = e.source;
+    if (msg === "register") {
+      friendWindows.push(win);
+      win.postMessage(JSON.stringify({method: "registered", title: document.title, count: slides.length}), document.location);
+      win.postMessage(JSON.stringify({method: "newslide", details: getDetails(idx), idx: idx}), document.location);
+      return;
+    }
+    if (msg === "back") back();
+    if (msg === "forward") forward();
+    if (msg === "toggleContent") toggleContent();
+    // setSlide(42)
+    var r = /setSlide\((\d+)\)/.exec(msg);
+    if (r) {
+        idx = r[1];
+        setSlide();
+    }
+  }
+
+  /* If a Video is present in this new slide, play it.
+     If a Video is present in the previous slide, stop it. */
+
+  function toggleContent() {
+    var s = document.querySelector("section[aria-selected]");
+    if (s) {
+        var video = s.querySelector("video");
+        if (video) {
+            if (video.ended || video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+    }
+  }
+
+  /* If the user change the slide number in the URL bar, jump
+     to this slide. */
+
+  window.onhashchange = function(e) {
+    var newidx = ~~window.location.hash.split("#")[1];
+    if (!newidx) newidx = 1;
+    if (newidx == idx) return;
+    idx = newidx;
+    setSlide();
+  }
+
+  /* Slide controls */
+
+  function back() {
+    if (idx == 1) return;
+    idx--;
+    setSlide();
+  }
+  function forward() {
+    if (idx >= slides.length) return;
+    idx++;
+    setSlide();
+  }
+  function setSlide() {
+    var old = document.querySelector("section[aria-selected]");
+    var next = document.querySelector("section:nth-of-type("+ idx +")");
+    if (old) {
+      old.removeAttribute("aria-selected");
+      var video = old.querySelector("video");
+      if (video) { video.pause(); }
+    }
+    if (next) {
+      next.setAttribute("aria-selected", "true");
+      var video = next.querySelector("video");
+      if (video) { video.play(); }
+    } else {
+      console.warn("No such slide: " + idx);
+      idx = 0;
+      for (var i = 0; i < slides.length; i++) {
+          if (slides[i].hasAttribute("aria-selected")) {
+              idx = i + 1;
+          }
+      }
+    }
+    window.location.hash = idx;
+    for (var i = 0; i < friendWindows.length; i++) {
+        friendWindows[i].postMessage(JSON.stringify({method: "newslide", details: getDetails(idx), idx: idx}), document.location);
+    }
+  }
+</script>
+<!-- vim: set fdm=marker: }}} -->
