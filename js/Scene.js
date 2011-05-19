@@ -41,6 +41,11 @@ function Scene() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
   };
 
+  this.render = function(){
+      this.clear();
+      this.draw();
+  };
+
   this.rotate = function(x, y, angle){
     this.clear();
     this.ctx.save();
