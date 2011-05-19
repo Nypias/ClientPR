@@ -353,10 +353,10 @@ function Game(nomJoueur) {
   this.moveSlider = function(slider, pos){	
     
     
-    if (pos > 10 && pos < 90)
+    if (pos > 9 && pos < 91)
     {
         //console.log("Position : " + pos);
-        slider.changePosition(pos); 
+        slider.changePosition(pos);
         this.nw.sendBouge(pos);
     }
     
@@ -369,7 +369,7 @@ function Game(nomJoueur) {
     
   this.moveSliderServer = function(slider, pos){	
      
-    if (pos > 10 && pos < 90)
+    if (pos > 9 && pos < 91)
     {
         slider.changePosition(pos); 
     }
