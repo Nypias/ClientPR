@@ -57,6 +57,10 @@ function Network (game){
     {
         game.changePseudo(data.pseudo);
     }
+	else if (data.msg == "RoomsStats")
+    {
+        game.roomsStats(data.rooms);
+    }
     else
     {
         //alert("Type : " + data.type);

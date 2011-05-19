@@ -156,6 +156,12 @@ function Game(nomJoueur) {
     this.scene.suppr('S'+nom);
     this.reInitialisationBalle();    
   };
+  
+  this.roomsStats = function(roomsNumber)
+  {
+	console.log("lol");
+	document.getElementById("roomsStats").innerHTML = "Nombre de salles de jeu actuellement connectées : " + roomsNumber;
+  }
 
     
   this.calculPositionBalle = function(posX,posY,collisionTime)
