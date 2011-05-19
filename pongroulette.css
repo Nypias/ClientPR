@@ -50,7 +50,7 @@
    margin: auto;
  }
  
- #playground .instructions, #playground #roomsStats {
+ #playground .instructions, #playground p, #playground #roomsStats {
    text-align: center;
    font-size: 9pt;
    color: rgba(255,255,255,0.6);
@@ -103,4 +103,14 @@
    margin: auto;
    margin-top: 80px;
    margin-bottom: 10px;
+ }
+
+ #infows {
+    font-weight: bold;
+    border: 1px solid #666;
+    border-radius: 10px;
+ }
+ 
+ #infows a {
+    color: inherit;
  }

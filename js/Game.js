@@ -360,7 +360,7 @@ function Game(nomJoueur) {
     if (pos > 9 && pos < 91)
     {
         //console.log("Position : " + pos);
-        slider.changePosition(pos); 
+        slider.changePosition(pos);
         this.nw.sendBouge(pos);
     }
     
