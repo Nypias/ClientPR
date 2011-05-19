@@ -94,6 +94,10 @@
    margin: 0;
    z-index: 1;
  }
+ 
+ #rightScore {
+    text-align: right;
+ }
 
 #scores {
    width: 800px;
