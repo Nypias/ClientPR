@@ -163,7 +163,7 @@ function Game(nomJoueur) {
   
   this.roomsStats = function(roomsNumber)
   {
-	document.getElementById("roomsStats").innerHTML = "Nombre de salles de jeu actuellement connectées : " + roomsNumber;
+	document.getElementById("roomsStats").innerHTML = "Nombre de salles de jeu actuellement connectées : <em>" + roomsNumber + "</em>";
   }
 
     

@@ -56,6 +56,14 @@
    color: rgba(255,255,255,0.6);
  }
  
+ #playground #roomsStats {
+   color: rgba(255,255,255, 1);
+ }
+ 
+ #playground #roomsStats em {
+   font-size:14pt;
+ } 
+ 
  #leftScore, #rightScore {
    position:absolute;
    opacity: 0.3;
