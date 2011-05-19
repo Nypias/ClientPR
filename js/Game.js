@@ -185,8 +185,20 @@ function Game(nomJoueur) {
     
   this.calculPositionBalle = function(posX, posY, collisionTime)
   {
-    var timeC = collisionTime-this.ancienTime;
-    console.log("Difference : " + timeC);
+    console.log("ENTREE COLLISION");
+    var timeC = collisionTime-this.ancienTime;	
+
+    /* Nombre de points a calculer*/
+    //console.log(timeC);
+    console.log("Ancien Time : " + this.ancienTime);
+    if (this.ancienTime != 0) {
+        var nombrePoints = Math.round((timeC*6)/240);
+    }
+    else {
+        var nombrePoints = 60;
+    }
+    console.log("Nombre de points : " + nombrePoints);
+
     this.ancienTime = collisionTime;
 
     if (this.ancienCollisionX != null && this.ancienCollisionY != null){
@@ -198,16 +210,6 @@ function Game(nomJoueur) {
     this.ancienCollisionX = (posX*this.scene.getWidth())/100;
     this.ancienCollisionY = (posY*this.scene.getHeight())/100;
     
-        
-    /* Nombre de points a calculer*/
-    console.log(timeC);
-    if (this.ancienTime != 0) {
-        var nombrePoints = Math.round((timeC*6)/240);
-    }
-    else {
-        var nombrePoints = 60;
-    }
-        console.log("Nombre de points : " + nombrePoints);
     
     // Calcul du tableau de points
     this.calculPositionsBalle(posX,posY,nombrePoints);
@@ -237,6 +239,8 @@ function Game(nomJoueur) {
     this.Gball.x = posX;
     this.Gball.y = posY;
     }*/
+
+	console.log("FIN COLLISION");
 
   };
   
@@ -353,10 +357,10 @@ function Game(nomJoueur) {
   this.moveSlider = function(slider, pos){	
     
     
-    if (pos > 10 && pos < 90)
+    if (pos > 9 && pos < 91)
     {
         //console.log("Position : " + pos);
-        slider.changePosition(pos); 
+        slider.changePosition(pos);
         this.nw.sendBouge(pos);
     }
     
@@ -369,7 +373,7 @@ function Game(nomJoueur) {
     
   this.moveSliderServer = function(slider, pos){	
      
-    if (pos > 10 && pos < 90)
+    if (pos > 9 && pos < 91)
     {
         slider.changePosition(pos); 
     }
