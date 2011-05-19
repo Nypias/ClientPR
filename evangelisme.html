@@ -5,12 +5,18 @@
     <meta charset="utf-8" />
     <link href="pongroulette.css" rel="stylesheet" />
   </head>
-  <body>
-      <h1>Websocket</h1>
-      <p>Si votre navigateur n’active pas les websockets vous pouvez tout de même jouer à notre jeu (grâce à un fallback en flash).</br>
-      Cependant les performances ne seront optimales, nous vous invitons donc à les activer :</br>
-      voici la marche à suivre pour firefox 3.6 ou ultérieur! </p>
-      <img src="aboutconfig.png" alt="ouvrir aboutconfig" />
-      <img src="websocket.png" alt="activer les websockets sur firefox" /> 
+  <body id="evangelism">
+      <h2>Améliorez les performances !</h2>
+      <p>Par défaut, Firefox n'active pas les Websocket. Le jeu fonctionne (grâce à un fallback en flash),
+      mais les performances ne seront pas optimales. Nous vous invitons donc à les activer :
+      voici la marche à suivre pour Firefox 3.6 ou ultérieur. </p>
+      <p>1. Accédez à la page "<strong>about:config</strong>" dans un onglet de Firefox.</p>
+      <p>2. <strong>Acceptez la confirmation</strong> qui vous est proposée (ne vous inquiétez pas, tout va bien se passer !) :</p>
+      <p class="wauto"><img src="aboutconfig.png" alt="ouvrir aboutconfig" style="max-width: 100%;" /></p>
+      <p>3. Dans le champ <em>Filtre</em>, tapez "<strong>websocket</strong>".</p>
+      <p>4. <strong>Double-cliquez</strong> sur la deuxième entrée qui s'affiche. 
+            <em>Le "<strong>false</strong>" devient alors "<strong>true</strong>".</em></p>
+      <p>5. Profitez d'un Pongroulette avec des performances bien améliorées... Bon jeu !</p>
+      <p class="wauto"><img src="websocket.png" alt="activer les websockets sur firefox" style="max-width: 100%;" /></p>
   </body>
 </html>

@@ -50,10 +50,31 @@
    margin: auto;
  }
  
- #playground .instructions, #playground p, #playground #roomsStats {
+ #playground .instructions, #playground p, #playground #roomsStats, #evangelism p {
    text-align: center;
    font-size: 9pt;
    color: rgba(255,255,255,0.6);
+ }
+ 
+ #evangelism  p, #evangelism h1 {
+    text-align: left;
+    margin: auto;
+    max-width: 800px;
+ }
+ 
+ #evangelism img {
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
+ }
+ 
+ #evangelism p.wauto {
+    max-width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+ }
+ 
+ #evangelism strong {
+    color: white;
  }
  
  #playground #roomsStats {
