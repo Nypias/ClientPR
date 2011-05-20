@@ -29,23 +29,23 @@ function Network (game){
     //       dans le tableaux des actions, et ces fonctions devrait être
     //       implémentée ensuite dans Game, pour éviter une dépendance de
     //       Network dans son initialisation.
-    console.log(data.msg);    
+    if(PR_DEBUG) console.log(data.msg);    
         
     if(data.msg == "GStat")        // Nombre de joueurs et score
     {
-      console.log("Dans GStat");
+      if(PR_DEBUG) console.log("Dans GStat");
       game.setJoueurs(data.players);
     }
     else if(data.msg == "SyncJ"){    // Position des raquettes
-      console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
+      if(PR_DEBUG) console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
-        console.log(key + " : Raquettes SyncJ : " + data.raquettes[key]);
+        if(PR_DEBUG) console.log(key + " : Raquettes SyncJ : " + data.raquettes[key]);
         game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
       }
     }
     else if(data.msg == "Collision")
     {
-      console.log("Collision : " + data.status);
+      if(PR_DEBUG) console.log("Collision : " + data.status);
       game.gestionCollision(data.status);
     }
     else if (data.msg == "Trajectoire")
@@ -81,7 +81,7 @@ function Network (game){
     ws.onopen = function() {
       this.connected = true;
       game.connect();
-      console.log("ws connected");
+      if(PR_DEBUG) console.log("WebSocket connected");
       events.onConnect();
     };
     ws.onclose = function() {
@@ -101,7 +101,7 @@ function Network (game){
     if (ws.readyState == 1)
         ws.send(JSON.stringify(msg));
     else
-        console.log(ws.readyState);
+        if(PR_DEBUG) console.log(ws.readyState);
   };
   
   

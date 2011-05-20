@@ -325,7 +325,7 @@ function Game(nomJoueur) {
 
 
   /*
-  Calcule la position de la balle, efface la scene, et redessine la balle
+  Calcule la position de la balle
   */
   this.setBall = function(k)
   {
@@ -334,55 +334,28 @@ function Game(nomJoueur) {
     this.Gball.y = this.tabPosBalle[k].y;
   }
   catch (err) {}
-          
-    // Display of the ball
-      /*window.mozRequestAnimationFrame(function() {
-	  self.scene.clear();
-	  self.scene.drawAll();
-      });*/
   };
   
   this.setBallXAndY = function(x,y)
   {
     this.Gball.x = x;
     this.Gball.y = y;
-          
-    // Display of the ball
-    /*window.mozRequestAnimationFrame(function() {  
-	self.scene.clear();
-	self.scene.drawAll();
-    });*/
   };
   
   this.moveSlider = function(slider, pos){	
-    
-    
     if (pos > 9 && pos < 91)
     {
         //console.log("Position : " + pos);
         slider.changePosition(pos);
         this.nw.sendBouge(pos);
     }
-    
-    //console.log('apres : ' +slider.a.y);
-    /*window.mozRequestAnimationFrame(function() {
-	self.scene.clear();
-	self.scene.drawAll();
-    });*/
   };
     
   this.moveSliderServer = function(slider, pos){	
-     
     if (pos > 9 && pos < 91)
     {
         slider.changePosition(pos); 
     }
-    
-    //console.log('apres : ' +slider.a.y);
-    /*window.mozRequestAnimationFrame(function() {
-	self.scene.clear();
-	self.scene.drawAll();
-    });*/
   };
   
   this.connect = function()

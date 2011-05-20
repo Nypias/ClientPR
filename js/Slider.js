@@ -11,7 +11,7 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.tailleRaqDep = 0.4;
   this.tailleRaqArr = 0.6;
 
-  console.log("Ancres : (" + ax + ";" + ay + "),(" + bx + ";" + by + ")");
+  if(PR_DEBUG) console.log("Ancres : (" + ax + ";" + ay + "),(" + bx + ";" + by + ")");
 
   this.ancreDep.x = ax;
   this.ancreDep.y = ay;
@@ -26,8 +26,8 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.angle = /*Math.abs(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur)) +*/ Math.PI/2 ;
   //console.log(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur));
 
-  console.log("X : " + this.positionPixels.x + "       Y : " + this.positionPixels.y);
-  console.log("Longueur : " + this.longueur);
+  if(PR_DEBUG) console.log("X : " + this.positionPixels.x + "       Y : " + this.positionPixels.y);
+  if(PR_DEBUG) console.log("Longueur : " + this.longueur);
 
   this.draw = function(ctx){
     ctx.fillStyle = couleurSlider;

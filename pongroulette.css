@@ -5,7 +5,7 @@
  }
  
  #jolilogo {
-   margin-top: 250px;
+   margin-top: 150px;
    text-align: center;
  }
  
@@ -45,12 +45,22 @@
    margin-bottom: 0px;
  }
  
+ #roomsStats {
+   width: 800px;
+   text-align: right;
+   margin: auto;
+   position: absolute;
+   right: 0px;
+   bottom: -5px;
+   margin: 0px;
+ }
+ 
  #playground {
    width: 800px;
    margin: auto;
  }
  
- #playground .instructions, #playground p, #playground #roomsStats, #evangelism p {
+ #playground .instructions, #playground p, #evangelism p {
    text-align: center;
    font-size: 9pt;
    color: rgba(255,255,255,0.6);
@@ -123,11 +133,19 @@
    z-index: 3;
 }
  
- h1 {
+ #header {
    width: 800px;
    margin: auto;
+   position: relative;
+ }
+ 
+h1 {
    margin-top: 80px;
    margin-bottom: 10px;
+ }
+ 
+ h1 img {
+   vertical-align: bottom;
  }
 
  #infows {
@@ -139,3 +157,57 @@
  #infows a {
     color: inherit;
  }
+
+
+#statsPage {
+  width: 700px;
+  margin: auto;
+}
+
+#statsPage table {
+  padding: 4px;
+  border: 2px solid white;
+  border-collapse: collapse;
+  border-radius: 4px;
+  float: left;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  display: block;
+}
+
+#statsPage table th {
+  font-weight: bold;
+  background-color: rgba(0,0,0,0.8);
+}
+
+#statsPage table td {
+  border-top: 1px solid rgba(255,255,255,0.4);
+  padding: 4px;
+}
+
+#statsPage table a {
+  color: orange;
+}
+
+#statsPage th.colip {
+  width: 50px;
+}
+#statsPage th.colpseudo {
+  min-width: 200px;
+}
+
+#statsPage .contnbsalle {
+  font-size: 14pt;
+}
+
+#statsPage .contnbsalle strong {
+  display: inline-block;
+  padding: 10px;
+  background-color: black;
+  width: 50px;
+  font-size: 20pt;
+  text-align: right;
+  border: 1px solid #CCC;
+  margin-left: 10px;
+}
