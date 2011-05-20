@@ -273,6 +273,10 @@ function Game(nomJoueur) {
   */
   this.calculPositionsBalle = function(posX,posY,nbrPoints)
   {
+    if (posX <= 3 || posX >= 97)
+    {
+        this.moveSlider(this.tabJoueurs[this.nomJ].slider, posY); //implémentation du bot
+    }
     // Initialisation d'un nouveau tableau ou l'on va stocker les points
     this.tabPosBalle = new Array(nbrPoints);
 
