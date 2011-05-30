@@ -187,6 +187,8 @@ function Game(nomJoueur) {
   {
 
     /*test audio*/
+    this.audio.pause();
+    this.audio.currentTime = 0 ; 
     this.audio.play();
 
     //console.log("ENTREE COLLISION");
@@ -244,7 +246,7 @@ function Game(nomJoueur) {
     this.Gball.y = posY;
     }*/
 
-	console.log("FIN COLLISION");
+    //console.log("FIN COLLISION");
 
   };
   
