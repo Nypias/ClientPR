@@ -40,7 +40,7 @@ function Network (game){
       if(PR_DEBUG) console.log("Dans SyncJ ");// + data.raquettes["Thomas"]);
       for (key in data.raquettes){     
         if(PR_DEBUG) console.log(key + " : Raquettes SyncJ : " + data.raquettes[key]);
-        game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key])
+          game.moveSliderServer(game.tabJoueurs[key].slider, data.raquettes[key]);
       }
     }
     else if(data.msg == "Collision")

@@ -57,7 +57,7 @@ function Game(nomJoueur) {
 	  self.scene.clear();
           self.scene.drawAll();
       });*/
-  }
+  };
 
   /*
    * Ajoute un joueur au tableau de joueurs.
@@ -79,18 +79,18 @@ function Game(nomJoueur) {
 	
     for (key in tabJoueursArg){ 
         longueurTab++;
-		var axeScore;
-		if (tabJoueursArg[key]["axe"] == 0)
-		{
-			axeScore = "leftScore";
-		}
-		else
-		{
-			axeScore = "rightScore";
-		}
-		document.getElementById(axeScore).innerHTML = key + "<br />" + tabJoueursArg[key]['points'];
+	var axeScore;
+	if (tabJoueursArg[key]["axe"] == 0)
+	{
+	    axeScore = "leftScore";
+	}
+	else
+	{
+	    axeScore = "rightScore";
+	}
+	document.getElementById(axeScore).innerHTML = key + "<br />" + tabJoueursArg[key]['points'];
     }
-    
+      
     for (key in this.tabJoueurs)
     {
         longueurTabJoueurs++;
@@ -180,24 +180,28 @@ function Game(nomJoueur) {
   this.roomsStats = function(roomsNumber)
   {
 	document.getElementById("roomsStats").innerHTML = "Nombre de salles de jeu actuellement connectées : <em>" + roomsNumber + "</em>";
-  }
+  };
 
     
   this.calculPositionBalle = function(posX, posY, collisionTime)
   {
-    console.log("ENTREE COLLISION");
+
+    /*test audio*/
+    this.audio.play();
+
+    //console.log("ENTREE COLLISION");
     var timeC = collisionTime-this.ancienTime;	
 
     /* Nombre de points a calculer*/
     //console.log(timeC);
-    console.log("Ancien Time : " + this.ancienTime);
+    //console.log("Ancien Time : " + this.ancienTime);
     if (this.ancienTime != 0) {
         var nombrePoints = Math.round((timeC*6)/240);
     }
     else {
         var nombrePoints = 60;
     }
-    console.log("Nombre de points : " + nombrePoints);
+    //console.log("Nombre de points : " + nombrePoints);
 
     this.ancienTime = collisionTime;
 
@@ -401,6 +405,9 @@ function Game(nomJoueur) {
 
       // Connection au Serveur
       this.nw.connect();
+
+      // Recuperation de l'element audio
+      this.audio = document.getElementsByTagName('audio')[0];
     
       setTimeout(function() {}, 1000);
       // Envoi du message Hello : connexion d'un nouveau joueur
