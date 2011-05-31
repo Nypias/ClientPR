@@ -187,9 +187,11 @@ function Game(nomJoueur) {
   {
 
     /*test audio*/
-    this.audio.pause();
-    this.audio.currentTime = 0 ; 
-    this.audio.play();
+    if(document.getElementsByName("soundOn")[0].checked == true){
+	this.audio.pause();
+	this.audio.currentTime = 0 ; 
+	this.audio.play();
+    }
 
     //console.log("ENTREE COLLISION");
     var timeC = collisionTime-this.ancienTime;	
