@@ -46,6 +46,12 @@
             38: function() { game.moveSlider(game.tabJoueurs[game.nomJ].slider, game.tabJoueurs[game.nomJ].slider.position - 4); },
             40: function() { game.moveSlider(game.tabJoueurs[game.nomJ].slider, game.tabJoueurs[game.nomJ].slider.position + 4); }
         }, 65);
+
+        document.addEventListener('touchmove', function(ev) {
+          console.log('touchmove event');      
+          ev.preventDefault();
+          game.moveSlider(game.tabJoueurs[game.nomJ].slider, (ev.touches[0].clientY / window.innerHeight) * 100);
+        }, false);
       });
     </script>
   </head>
