@@ -11,8 +11,6 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.tailleRaqDep = 0.4;
   this.tailleRaqArr = 0.6;
 
-  if(PR_DEBUG) console.log("Ancres : (" + ax + ";" + ay + "),(" + bx + ";" + by + ")");
-
   this.ancreDep.x = ax;
   this.ancreDep.y = ay;
   this.ancreArr.x = bx;
@@ -23,17 +21,14 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.positionPixels.y = (((this.ancreArr.y - this.ancreDep.y)*(this.position - 10))/100)+this.ancreDep.y;
 
   this.h = 7;
-  this.angle = /*Math.abs(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur)) +*/ Math.PI/2 ;
-  //console.log(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur));
-
-  if(PR_DEBUG) console.log("X : " + this.positionPixels.x + "       Y : " + this.positionPixels.y);
-  if(PR_DEBUG) console.log("Longueur : " + this.longueur);
+  //this.angle = /*Math.abs(Math.acos((this.ancreArr.y - this.ancreDep.y) / this.longueur)) +*/ Math.PI/2 ;
+  this.angle = Math.acos((this.ancreArr.y - this.ancreDep.y) / Math.sqrt(( Math.pow(this.ancreArr.x - this.ancreDep.x, 2) + Math.pow(this.ancreArr.y - this.ancreDep.y, 2) )));
 
   this.draw = function(ctx){
     ctx.fillStyle = couleurSlider;
     ctx.save();
     ctx.translate(this.positionPixels.x, this.positionPixels.y);
-    //ctx.rotate(this.angle);
+    ctx.rotate(this.angle);
     ctx.beginPath();
     ctx.lineTo(0, this.longueur);
     ctx.lineTo(this.h, this.longueur);
@@ -53,6 +48,12 @@ function Slider(ax, ay, bx, by, positionR, tailleSlider)
   this.moveTo = function(ax, ay){
     this.position.x = ax;
     this.position.y = ay;
+  };
+  
+  this.changeAncres = function (ancreDepart, ancreArrivee)
+  {
+    this.ancreDep = ancreDepart;
+    this.ancreArr = ancreArrivee;
   };
 
 }

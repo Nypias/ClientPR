@@ -57,9 +57,13 @@ function Network (game){
     {
         game.changePseudo(data.pseudo);
     }
-	else if (data.msg == "RoomsStats")
+	  else if (data.msg == "RoomsStats")
     {
         game.roomsStats(data.rooms);
+    }
+    else if (data.msg == "Terrain")
+    {
+        game.setTerrain(data.ancres);
     }
     else
     {

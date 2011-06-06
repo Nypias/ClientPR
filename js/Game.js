@@ -95,6 +95,7 @@ function Game(nomJoueur) {
     {
         longueurTabJoueurs++;
     }
+    this.tabJoueurs.longueur = longueurTabJoueurs;
     
     //console.log("Taille Arg : " + longueurTab + "     Taille Tab Joueurs : " + longueurTabJoueurs);
       
@@ -106,10 +107,11 @@ function Game(nomJoueur) {
         for (key in tabJoueursArg)
         {
         //console.log(key + " : " + tabJoueursArg[key]);
-            if (!this.tabJoueurs[tabJoueursArg[key]])
+            if (!this.tabJoueurs[key])
             {   //console.log("Ajout Joueur sur l'axe " + tabJoueursArg[key].axe);
                 // On regarde la valeur de axe dans tabJoueurs pour voir ou positionner la raquette
-                this.calculAncreJoueur(key,tabJoueursArg[key].axe);
+                //this.calculAncreJoueur(key,tabJoueursArg[key].axe);
+                this.addJoueur(key,axe);
             }
         }
         //console.log("Affichage Joueurs Apres");
@@ -124,50 +126,68 @@ function Game(nomJoueur) {
             }
         }
     }
-    
-  };
-
-  /*
-  Calcule la position des ancres de la raquette d'un joueur en fonction de l'axe donne par le serveur.
-  Ajoute ensuite le joueur a la liste des joueurs.
-  Exemple : Si l'axe est de 0, alors la raquette sera a gauche.
-  Si l'axe est de 1, alors la raquette sera a droite.	
-  */
-  this.calculAncreJoueur = function(nom,axe)
-  {
-      var ancreDepart = {x:0, y:0};
-      var ancreArrivee = {x:0, y:0};
-      //console.log("Entree sur le calcul d'ancre avec axe = " + axe);
-      if (axe === 0)
-      {
-        //console.log("AXE = 0");
-          // Raquette a gauche
-          ancreDepart.x = 0;
-          ancreDepart.y = 0;
-          ancreArrivee.x = 0;
-          ancreArrivee.y = this.scene.getHeight();
-          this.addJoueur(nom,ancreDepart,ancreArrivee);	
-      }
-      else if (axe === 1)
-      {
-            // Raquette a droite
-            ancreDepart.x = this.scene.getWidth()-7;
-            ancreDepart.y = 0;
-            ancreArrivee.x = ancreDepart.x;
-            ancreArrivee.y = this.scene.getHeight();
-            this.addJoueur(nom,ancreDepart,ancreArrivee);
-      }
   };
 
     // Ajoute un joueur
-  this.addJoueur = function(nom, ancre1, ancre2)
+  this.addJoueur = function(nom, axe)
   {
-    var sliderJ = new Slider(ancre1.x, ancre1.y, ancre2.x, ancre2.y,50,100);
+    var sliderJ = new Slider(0,0,0,0,50,100);
     this.scene.add('S'+nom, sliderJ);
     this.tabJoueurs[nom] = {slider: sliderJ};	
+    this.tabAxes[nom] = axe;
     this.reInitialisationBalle(); 
     //console.log("Add Joueur : " + nom);
   };
+  
+  this.setTerrain = function (tabAncres)
+  {  
+    this.tabTempAncres = tabAncres;
+    for (key in this.tabJoueurs)
+    {
+      axe = this.tabAxes[key];
+      this.tabJoueurs[nom].changeAncres(tabAncres["ancre"+axe], tabAncres[("ancre"+(axe+1)) % this.tabJoueurs.longueur]);
+    }
+    
+    this.reInitialisationBalle();
+  };
+  
+  this.preparationModifTerrain = function(tabAncres)
+  {
+    var tempsInitial = Date.getTime();
+  
+    this.nombrePointsCalculesMouvementSlide = 60;
+    var axe = 0;
+    for (key in this.tabJoueurs)
+    {
+      for (var i = 0; i < this.nombrePointsCalculesMouvementSlide; i++)
+      {
+        this.tabTempAncres[axe][i].x = (this.tabTempAncres["ancre"+this.tabAxes[key]].x - this.tabJoueurs[key].ancreDep.x)/(this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.x;
+        this.tabTempAncres[axe][i].y = (this.tabTempAncres["ancre"+this.tabAxes[key]].y - this.tabJoueurs[key].ancreDep.y)/(this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.y;
+      }
+      axe++;
+    }
+    // We have everything !
+    var tempsIci = Date.getTime();
+    var tempsRestant = 1100 - (tempsIci - tempsInitial);
+    
+    var i = 0;
+    try {
+        this.affichageSliders = setInterval("game.modifTerrain(i) ; i++;",tempsRestant/this.nombrePointsCalculesMouvementSlide);
+    }
+    catch (err) {
+        clearInterval(this.affichageSliders);
+    }
+   
+  };
+  
+  this.modifTerrain = function(indice)
+  {
+    for (key in this.tabJoueurs)
+    {
+      axe = this.tabAxes[key];
+      this.tabJoueurs[nom].changeAncres(this.tabTempAncres[axe][indice], this.tabTempAncres[(axe + 1) % this.tabJoueurs.longueur][indice]);
+    }
+  }
 
   // Supprime un joueur et son slider
   this.supprJoueur = function(nom)
@@ -374,6 +394,7 @@ function Game(nomJoueur) {
   {
       // Joueurs
       this.tabJoueurs = new Array();	            // A CHANGER       
+      this.tabAxes = new Array();
       
       this.nomJ = nomJoueur;
       
