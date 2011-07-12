@@ -74,7 +74,8 @@ function Game(nomJoueur) {
     var longueurTab = 0;
     var longueurTabJoueurs = 0;
 	
-	document.getElementById("leftScore").innerHTML = "";
+	/* Suppression des scores 2 joueurs pour la gestion du multi
+    document.getElementById("leftScore").innerHTML = "";
 	document.getElementById("rightScore").innerHTML = "";
 	
     for (key in tabJoueursArg){ 
@@ -89,8 +90,14 @@ function Game(nomJoueur) {
 			axeScore = "rightScore";
 		}
 		document.getElementById(axeScore).innerHTML = key + "<br />" + tabJoueursArg[key]['points'];
+    }*/
+
+    // Longueur du nouveau tableau de joueurs.
+    for (key in tabJoueursArg) {
+        longueurTab++;
     }
     
+    // Longueur du tableau de joueurs actuel.
     for (key in this.tabJoueurs)
     {
         longueurTabJoueurs++;
@@ -138,54 +145,63 @@ function Game(nomJoueur) {
     this.reInitialisationBalle(); 
     //console.log("Add Joueur : " + nom);
   };
-  
+
   this.setTerrain = function (tabAncres)
-  {  
-    this.tabTempAncres = tabAncres;
-    for (key in this.tabJoueurs)
-    {
-      axe = this.tabAxes[key];
-      this.tabJoueurs[nom].changeAncres(tabAncres["ancre"+axe], tabAncres[("ancre"+(axe+1)) % this.tabJoueurs.longueur]);
-    }
-    
-    this.reInitialisationBalle();
-  };
-  
-  this.preparationModifTerrain = function(tabAncres)
   {
-    var tempsInitial = Date.getTime();
-  
-    this.nombrePointsCalculesMouvementSlide = 60;
-    var axe = 0;
-    for (key in this.tabJoueurs)
-    {
-      for (var i = 0; i < this.nombrePointsCalculesMouvementSlide; i++)
-      {
-        this.tabTempAncres[axe][i].x = (this.tabTempAncres["ancre"+this.tabAxes[key]].x - this.tabJoueurs[key].ancreDep.x)/(this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.x;
-        this.tabTempAncres[axe][i].y = (this.tabTempAncres["ancre"+this.tabAxes[key]].y - this.tabJoueurs[key].ancreDep.y)/(this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.y;
-      }
-      axe++;
+    this.tabTempAncres = tabAncres;
+    var nomJoueur;
+
+    // Pour chaque joueur, on enregistre son axe. Et on change les deux positions de ses ancres
+    for (var i=0; i < tabAncres.length ; i++) {
+        nomJoueur = tabAncres[i].nom;
+        axe = this.tabAxes[nomJoueur];
+
+        /* On change les ancres avec les parametres :
+            - Tableau contenant (x du joueur i; y du joueur i) --> premiere position de l'ancre
+            - Tableau contenant (x du joueur i+1; y du joueur i+1) --> deuxieme position de l'ancre
+        */
+        this.tabJoueurs[nomJoueur].changeAncres([tabAncres[i].x, tabAncres[i].y] , 
+            [tabAncres[(i+1) % tabAncres.length].x, tabAncres[(i+1) % tabAncres.length].y]);
     }
-    // We have everything !
-    var tempsIci = Date.getTime();
-    var tempsRestant = 1100 - (tempsIci - tempsInitial);
-    
-    var i = 0;
-    try {
-        this.affichageSliders = setInterval("game.modifTerrain(i) ; i++;",tempsRestant/this.nombrePointsCalculesMouvementSlide);
+
+    this.reInitialisationBalle();
+  }
+
+    this.preparationModifTerrain = function(tabAncres) {
+        var tempsInitial = Date.getTime();
+
+        this.nombrePointsCalculesMouvementSlide = 60;
+        var axe = 0;
+        for (key in this.tabJoueurs) {
+            for (var i=0; i < this.nombrePointsCalculesMouvementSlide; i++) {
+                this.tabTempAncres[axe][i].x = (this.tabTempAncres[axe].x - this.tabJoueurs[key].ancreDep.x) /
+                        (this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.x;
+                this.tabTempAncres[axe][i].y = (this.tabTempAncres[axe].y - this.tabJoueurs[key].ancreDep.y) /
+                        (this.nombrePointsCalculesMouvementSlide-i) + this.tabJoueurs[key].ancreDep.y;
+            }
+            axe++;
+        }
+
+        // We have everything !
+        var tempsIci = Date.getTime();
+        var tempsRestant = 1100 - (tempsIci - tempsInitial);
+        
+        var i = 0;
+        try {
+            this.affichageSliders = setInterval("game.modifTerrain(i) ; i++;",tempsRestant/
+                    this.nombrePointsCalculesMouvementSlide);
+        } catch (err) {
+            clearInterval(this.affichageSliders);
+        }
     }
-    catch (err) {
-        clearInterval(this.affichageSliders);
-    }
-   
-  };
   
   this.modifTerrain = function(indice)
   {
     for (key in this.tabJoueurs)
     {
       axe = this.tabAxes[key];
-      this.tabJoueurs[nom].changeAncres(this.tabTempAncres[axe][indice], this.tabTempAncres[(axe + 1) % this.tabJoueurs.longueur][indice]);
+      this.tabJoueurs[key].changeAncres(this.tabTempAncres[axe][indice], this.tabTempAncres[(axe + 1) %       
+              this.tabJoueurs.longueur][indice]);
     }
   }
 
