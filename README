@@ -1,9 +1,5 @@
-Lisez-moi !!
-==========================================================
+﻿
+PongRoulette® dusts off the famous game Pong thanks to the power of new web technologies. 
+It is a modest technological demonstration of what we can do with HTML5/JavaScript, WebSocket protocol and Python's Twisted server.
 
-Ce dépôt contient le code source du client web de PongRoulette, 
-basé sur les technologies innovantes d'HTML5 telles que Canvas,
-<audio> et WebSocket.
-
-Découvrez un nouvel univers du jeu en ligne, avec un jeu Massivement
-Multijoueur basé sur des technologies libres et au concept formidable.
+Enjoy and don't hesitate to reuse some parts of this code!
